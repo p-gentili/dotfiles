@@ -1,5 +1,5 @@
 syntax enable	        " enable syntax processing
-set background=light      
+set background=dark
 colorscheme PaperColor
 
 set number              " show line numbers
@@ -57,7 +57,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'https://github.com/vim-scripts/vim-svngutter.git'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'https://github.com/kien/ctrlp.vim.git'
 
 call plug#end()
 " ALE
@@ -65,10 +64,6 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_linters = {
 \   'python': ['flake8'],
 \}
-
-" CtrlP
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
 
 set mouse=a         " use mouse
 
