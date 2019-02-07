@@ -51,12 +51,19 @@ else
     call plug#begin("~/.vim/plugged")
 endif
 
-
+" Syntax
 Plug 'w0rp/ale'
+
+" Gutters
 Plug 'airblade/vim-gitgutter'
 Plug 'https://github.com/vim-scripts/vim-svngutter.git'
+
+" FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
+" Themes
+Plug 'NLKNguyen/papercolor-theme'
 
 call plug#end()
 " ALE
