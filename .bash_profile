@@ -3,8 +3,6 @@ alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -al'
 
-alias th='cd ~/Google\ Drive/Università/Tesi\ laurea\ magistrale/Thesis\ \(TEX\)/'
-
 alias p3='python3'
 
 #alias ipy='ipython'
