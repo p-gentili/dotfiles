@@ -1,7 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/Users/paolo/Workspace/AlmaSVN/Software_Browser'
-let g:netrw_dirhist_2='/mnt/d/svn/IntelliTower/Software_Browser'
-let g:netrw_dirhist_3='/mnt/d/svn/IntelliTower/Software_Browser/LIBRERIE_PROGETTI'
-let g:netrw_dirhist_4='/mnt/d/svn/IntelliTower/Software_Browser/LIBRERIE_PROGETTI/bobcat'
-let g:netrw_dirhist_5='D:/svn/IntelliTower/Software_Browser'
