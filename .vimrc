@@ -1,6 +1,29 @@
+" plugins manager
+if has('win32')
+    call plug#begin('C:\Users\pgentili\_vimfiles\vim_plugged')
+else
+    call plug#begin("~/.vim/plugged")
+endif
+
+" Syntax
+Plug 'w0rp/ale'
+
+" Gutters
+Plug 'airblade/vim-gitgutter'
+Plug 'https://github.com/vim-scripts/vim-svngutter.git'
+
+" FZF
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+" Themes
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'arcticicestudio/nord-vim'
+
+call plug#end()
+
 syntax enable	        " enable syntax processing
-set background=dark
-colorscheme PaperColor
+colorscheme nord
 
 set number              " show line numbers
 set relativenumber      " show relative line numbers
@@ -44,28 +67,6 @@ if has('win32')
     imap <C-v> <ESC>"+pa
 endif
 
-" plugins manager
-if has('win32')
-    call plug#begin('C:\Users\pgentili\_vimfiles\vim_plugged')
-else
-    call plug#begin("~/.vim/plugged")
-endif
-
-" Syntax
-Plug 'w0rp/ale'
-
-" Gutters
-Plug 'airblade/vim-gitgutter'
-Plug 'https://github.com/vim-scripts/vim-svngutter.git'
-
-" FZF
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
-" Themes
-Plug 'NLKNguyen/papercolor-theme'
-
-call plug#end()
 " ALE
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_linters = {
