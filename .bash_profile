@@ -16,6 +16,7 @@ alias bupcl='bup ; bcl'
 #Updated paths
 export PATH="/usr/local/bin:/usr/local/sbin:~/bin:$PATH"
 export PATH="/usr/local/opt/llvm/bin:$PATH"
+export PATH="$PATH:~/Workspace/flutter/bin"
 
 #GIT autocomplete
 if [ -f ~/.git-completion.bash ]; then 
