@@ -6,7 +6,7 @@ else
 endif
 
 " Syntax
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 
 " Gutters
 Plug 'airblade/vim-gitgutter'
@@ -17,6 +17,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " Themes
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'arcticicestudio/nord-vim'
 
@@ -45,6 +46,10 @@ set foldmethod=indent   " fold based on indent level
 
 set wildmenu            " menu for completion
 
+set fileformat=unix
+set fileformats=unix,dos
+"set nobinary
+
 " remap esc to jk 
 inoremap jk <Esc>
 
@@ -69,6 +74,8 @@ endif
 
 " ALE
 let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_save =  0
+let g:ale_lint_on_enter =  0
 let g:ale_linters = {
 \   'python': ['flake8'],
 \}
