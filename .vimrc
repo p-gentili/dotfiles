@@ -7,6 +7,7 @@ endif
 
 " Syntax
 Plug 'w0rp/ale'
+Plug 'https://github.com/leafgarland/typescript-vim.git'
 
 " Gutters
 Plug 'airblade/vim-gitgutter'
