@@ -5,6 +5,8 @@ else
     call plug#begin("~/.vim/plugged")
 endif
 
+Plug 'https://github.com/vim-airline/vim-airline.git'
+
 " Syntax
 " Plug 'w0rp/ale'
 
@@ -22,6 +24,10 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
+
+if (has("termguicolors"))
+  set termguicolors
+endif
 
 syntax enable	        " enable syntax processing
 colorscheme nord
