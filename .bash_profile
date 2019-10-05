@@ -7,8 +7,7 @@ alias p3='python3'
 
 #alias ipy='ipython'
 
-alias rpi='ssh pi@192.168.1.15'
-
+alias rpi='ssh pi@192.168.1.50'
 alias bup='brew upgrade && brew cask upgrade'
 alias bcl='brew cleanup -s'
 alias bupcl='bup ; bcl'
