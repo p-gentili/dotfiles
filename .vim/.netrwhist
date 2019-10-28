@@ -1,0 +1,4 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_1='/mnt/svn/IntelliTower/Labview/UpdatesManager/setup_files/setup_20191021/temp/etc/logrotate.d'
+let g:netrw_dirhist_2='/mnt/svn/IntelliTower/Labview/UpdatesManager/setup_files/setup_20191021_no_part/temp/etc/logrotate.d'
