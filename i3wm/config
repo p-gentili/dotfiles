@@ -9,6 +9,10 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+gaps inner 10
+gaps outer 0
+smart_gaps on
+
 set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
