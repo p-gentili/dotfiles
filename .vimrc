@@ -26,9 +26,9 @@ Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 
-if (has("termguicolors"))
-  set termguicolors
-endif
+"if (has("termguicolors"))
+"  set termguicolors
+"endif
 
 syntax enable	        " enable syntax processing
 colorscheme nord
