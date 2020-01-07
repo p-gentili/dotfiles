@@ -97,4 +97,5 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias ml="cd /mnt/svn/IntelliTower/Software_Browser"
+alias itml="cd /mnt/svn/IntelliTower/Software_Browser"
+alias itll="cd /mnt/svn/IntelliTower/FirmwareSTM32"

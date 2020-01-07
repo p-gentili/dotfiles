@@ -13,7 +13,7 @@ Plug 'https://github.com/leafgarland/typescript-vim.git'
 
 " Gutters
 Plug 'airblade/vim-gitgutter'
-Plug 'https://github.com/vim-scripts/vim-svngutter.git'
+" Plug 'https://github.com/vim-scripts/vim-svngutter.git'
 
 " FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
