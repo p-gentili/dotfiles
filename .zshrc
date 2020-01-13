@@ -63,12 +63,25 @@ ZSH_THEME="robbyrussell"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+# Set fzf installation directory path
+# XXX Set in custom path
+# export FZF_BASE=/path/to/fzf/install/dir
+
+# Uncomment the following line to disable fuzzy completion
+# export DISABLE_FZF_AUTO_COMPLETION="true"
+
+# Uncomment the following line to disable key bindings (CTRL-T, CTRL-R, ALT-C)
+# export DISABLE_FZF_KEY_BINDINGS="true"
+
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+    git
+    fzf
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -98,8 +111,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
-alias itml="cd /mnt/svn/IntelliTower/Software_Browser"
-alias itll="cd /mnt/svn/IntelliTower/FirmwareSTM32"
 alias bup='brew upgrade && brew cask upgrade'
 alias bcl='brew cleanup -s'
 alias bupcl='bup ; bcl'
