@@ -111,6 +111,3 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
-alias bup='brew upgrade && brew cask upgrade'
-alias bcl='brew cleanup -s'
-alias bupcl='bup ; bcl'
