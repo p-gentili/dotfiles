@@ -5,8 +5,6 @@ else
     call plug#begin("~/.vim/plugged")
 endif
 
-Plug 'https://github.com/vim-airline/vim-airline.git'
-
 " Syntax
 " Plug 'w0rp/ale'
 Plug 'https://github.com/leafgarland/typescript-vim.git'
