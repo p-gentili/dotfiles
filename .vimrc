@@ -21,6 +21,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'arcticicestudio/nord-vim'
+Plug 'morhetz/gruvbox'
 
 call plug#end()
 
