@@ -30,7 +30,8 @@ call plug#end()
 "endif
 
 syntax enable	        " enable syntax processing
-colorscheme nord
+colorscheme gruvbox
+set background=dark
 
 set number              " show line numbers
 set relativenumber      " show relative line numbers
@@ -86,5 +87,5 @@ let g:ale_linters = {
 \   'python': ['flake8'],
 \}
 
-set mouse=a         " use mouse
+" set mouse=a         " use mouse
 
