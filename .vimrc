@@ -11,20 +11,27 @@ endif
 
 " Gutters
 Plug 'airblade/vim-gitgutter'
-" Plug 'https://github.com/vim-scripts/vim-svngutter.git'
 
 " FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " TMUX
-Plug 'christoomey/vim-tmux-navigator'
+" Plug 'christoomey/vim-tmux-navigator'
 
 " Themes
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'arcticicestudio/nord-vim'
 Plug 'morhetz/gruvbox'
+
+if has('nvim')
+    " Neovim specific plugs
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'nvim-lua/completion-nvim'
+else
+    " Standard vim specific plugs
+endif
 
 call plug#end()
 
@@ -91,4 +98,29 @@ let g:ale_linters = {
 \}
 
 " set mouse=a         " use mouse
+
+if has('nvim')
+    " Neovim specific commands
+
+lua << EOF
+    require'lspconfig'.pyls.setup{
+        on_attach=require'completion'.on_attach
+    }
+EOF
+    " use omni completion provided by lsp
+    autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
+    " Use <Tab> and <S-Tab> to navigate through popup menu
+    inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+    " Set completeopt to have a better completion experience
+    set completeopt=menuone,noinsert,noselect
+
+    " Avoid showing message extra message when using completion
+    set shortmess+=c
+
+else
+    " Standard vim specific commands
+endif
 
