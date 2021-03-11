@@ -117,6 +117,12 @@ EOF
     " Set completeopt to have a better completion experience
     set completeopt=menuone,noinsert,noselect
 
+    " Disable auto popup for completion
+    let g:completion_enable_auto_popup = 0
+
+    " map <c-p> to manually trigger completion
+    map <silent> <c-p> <Plug>(completion_trigger)
+
     " Avoid showing message extra message when using completion
     set shortmess+=c
 
