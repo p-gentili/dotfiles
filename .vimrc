@@ -8,6 +8,7 @@ endif
 " Syntax
 " Plug 'w0rp/ale'
 " Plug 'https://github.com/leafgarland/typescript-vim.git'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Gutters
 Plug 'airblade/vim-gitgutter'
@@ -27,8 +28,8 @@ Plug 'morhetz/gruvbox'
 
 if has('nvim')
     " Neovim specific plugs
-    Plug 'neovim/nvim-lspconfig'
-    Plug 'nvim-lua/completion-nvim'
+    " Plug 'neovim/nvim-lspconfig'
+    " Plug 'nvim-lua/completion-nvim'
 else
     " Standard vim specific plugs
 endif
@@ -102,29 +103,29 @@ let g:ale_linters = {
 if has('nvim')
     " Neovim specific commands
 
-lua << EOF
-    require'lspconfig'.pyls.setup{
-        on_attach=require'completion'.on_attach
-    }
-EOF
-    " use omni completion provided by lsp
-    autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
-
-    " Use <Tab> and <S-Tab> to navigate through popup menu
-    inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-    " Set completeopt to have a better completion experience
-    set completeopt=menuone,noinsert,noselect
-
-    " Disable auto popup for completion
-    let g:completion_enable_auto_popup = 0
-
-    " map <c-p> to manually trigger completion
-    map <silent> <c-p> <Plug>(completion_trigger)
-
-    " Avoid showing message extra message when using completion
-    set shortmess+=c
+" lua << EOF
+"     require'lspconfig'.pyls.setup{
+"         on_attach=require'completion'.on_attach
+"     }
+" EOF
+     " use omni completion provided by lsp
+     " autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
+ 
+     " Use <Tab> and <S-Tab> to navigate through popup menu
+     " inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+     " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" 
+     " Set completeopt to have a better completion experience
+     " set completeopt=menuone,noinsert,noselect
+" 
+     " Disable auto popup for completion
+     " let g:completion_enable_auto_popup = 0
+" 
+     " map <c-p> to manually trigger completion
+     " map <silent> <c-p> <Plug>(completion_trigger)
+" 
+     " Avoid showing message extra message when using completion
+     " set shortmess+=c
 
 else
     " Standard vim specific commands
