@@ -102,6 +102,7 @@ let g:ale_linters = {
 
 if has('nvim')
     " Neovim specific commands
+    tnoremap <Esc> <C-\><C-n>
 
 " lua << EOF
 "     require'lspconfig'.pyls.setup{
