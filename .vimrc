@@ -90,6 +90,9 @@ if has('win32')
     imap <C-v> <ESC>"+pa
 endif
 
+" FZF
+nnoremap <silent> <C-t> :Files<CR>
+
 " ALE
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_save =  0
