@@ -10,8 +10,9 @@ endif
 " Plug 'https://github.com/leafgarland/typescript-vim.git'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" Gutters
+" VSC
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 
 " FZF
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -19,6 +20,9 @@ Plug 'junegunn/fzf.vim'
 
 " TMUX
 " Plug 'christoomey/vim-tmux-navigator'
+
+" AIRLINE
+Plug 'vim-airline/vim-airline'
 
 " Themes
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
@@ -100,6 +104,14 @@ let g:ale_lint_on_enter =  0
 let g:ale_linters = {
 \   'python': ['flake8'],
 \}
+
+" VSC
+autocmd BufWritePost * GitGutter
+
+" Airline
+let g:airline#extensions#branch#enabled = 1
+let g:airline_section_x=''  " hide file format from airline
+let g:airline_section_y=''  " hide encoding from airline
 
 " set mouse=a         " use mouse
 
