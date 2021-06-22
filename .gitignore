@@ -1,2 +1,3 @@
 .vim/plugged
 .vim/.netrwhist
+.vim/coc-settings.json
