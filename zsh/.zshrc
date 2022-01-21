@@ -25,6 +25,6 @@ zstyle ':vcs_info:git:*' formats '%F{160}%u%f %F{40}%c%f %F{208}(%b)%f '
  
 # Set up the prompt (with git branch name)
 setopt PROMPT_SUBST
-PROMPT='%~ $ '
+PROMPT='%~ '
 RPROMPT=\$vcs_info_msg_0_
 
