@@ -2,5 +2,5 @@
 alias gco="git checkout"
 
 # ls
-alias ll="ls -l"
-alias la="ls -al"
+alias ll="ls -l --color"
+alias la="ls -al --color"

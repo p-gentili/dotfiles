@@ -10,8 +10,10 @@ if [ -f ~/.zsh_custom_alias ]; then
 fi
 
 # Plugins
-source ~/dotfiles/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/dotfiles/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 source ~/dotfiles/zsh/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
+source ~/dotfiles/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+bindkey '^ ' autosuggest-accept
 
 # Load version control information
 autoload -Uz vcs_info
