@@ -15,6 +15,10 @@ source ~/dotfiles/zsh/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh
 source ~/dotfiles/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 bindkey '^ ' autosuggest-accept
 
+# Autocomplete matches caps letter
+autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
 # Load version control information
 autoload -Uz vcs_info
 precmd() { vcs_info }
