@@ -3,4 +3,4 @@ alias gco="git checkout"
 
 # ls
 alias ll="ls -l --color"
-alias la="ls -al --color"
+alias lla="ls -al --color"
