@@ -24,6 +24,9 @@ Plug 'christoomey/vim-tmux-navigator'
 " AIRLINE
 Plug 'vim-airline/vim-airline'
 
+" Autoformat
+Plug 'Chiel92/vim-autoformat'
+
 " Themes
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'NLKNguyen/papercolor-theme'
@@ -80,6 +83,9 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+" Autoformat
+noremap <F3> :Autoformat<CR>
 
 " gVIM
 if has('win32')
