@@ -32,3 +32,5 @@ setopt PROMPT_SUBST
 PROMPT='%~ '
 RPROMPT=\$vcs_info_msg_0_
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

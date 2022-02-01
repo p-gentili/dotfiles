@@ -14,10 +14,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
-" FZF
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
 " TMUX
 Plug 'christoomey/vim-tmux-navigator'
 
@@ -40,6 +36,11 @@ if has('nvim')
 else
     " Standard vim specific plugs
 endif
+
+" FZF
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
 
 call plug#end()
 
