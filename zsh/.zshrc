@@ -35,5 +35,7 @@ setopt PROMPT_SUBST
 PROMPT='%~ '
 RPROMPT=\$vcs_info_msg_0_
 
+# Path
+export PATH=$HOME/.local/bin:$PATH
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
