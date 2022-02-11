@@ -48,7 +48,7 @@ call plug#end()
 "  set termguicolors
 "endif
 
-syntax enable	        " enable syntax processing
+syntax enable           " enable syntax processing
 colorscheme gruvbox
 set background=dark
 
@@ -76,7 +76,7 @@ set fileformat=unix
 set fileformats=unix,dos
 "set nobinary
 
-" remap esc to jk 
+" remap esc to jk
 inoremap jk <Esc>
 
 " remap for moving within windows without pressing ctrl+w
@@ -95,7 +95,7 @@ if has('win32')
     set guioptions-=r  "remove right-hand scroll bar
     set guioptions-=L  "remove left-hand scroll bar
     set shell=powershell
-    vmap <C-c> "+yi    
+    vmap <C-c> "+yi
     vmap <C-x> "+c
     vmap <C-v> c<ESC>"+p
     imap <C-v> <ESC>"+pa
@@ -109,8 +109,8 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_save =  0
 let g:ale_lint_on_enter =  0
 let g:ale_linters = {
-\   'python': ['flake8'],
-\}
+            \   'python': ['flake8'],
+            \}
 
 " VSC
 autocmd BufWritePost * GitGutter
@@ -126,29 +126,29 @@ if has('nvim')
     " Neovim specific commands
     tnoremap <Esc> <C-\><C-n>
 
-" lua << EOF
-"     require'lspconfig'.pyls.setup{
-"         on_attach=require'completion'.on_attach
-"     }
-" EOF
-     " use omni completion provided by lsp
-     " autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
- 
-     " Use <Tab> and <S-Tab> to navigate through popup menu
-     " inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-     " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" 
-     " Set completeopt to have a better completion experience
-     " set completeopt=menuone,noinsert,noselect
-" 
-     " Disable auto popup for completion
-     " let g:completion_enable_auto_popup = 0
-" 
-     " map <c-p> to manually trigger completion
-     " map <silent> <c-p> <Plug>(completion_trigger)
-" 
-     " Avoid showing message extra message when using completion
-     " set shortmess+=c
+    " lua << EOF
+    "     require'lspconfig'.pyls.setup{
+    "         on_attach=require'completion'.on_attach
+    "     }
+    " EOF
+    " use omni completion provided by lsp
+    " autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
+    " Use <Tab> and <S-Tab> to navigate through popup menu
+    " inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+    " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    "
+    " Set completeopt to have a better completion experience
+    " set completeopt=menuone,noinsert,noselect
+    "
+    " Disable auto popup for completion
+    " let g:completion_enable_auto_popup = 0
+    "
+    " map <c-p> to manually trigger completion
+    " map <silent> <c-p> <Plug>(completion_trigger)
+    "
+    " Avoid showing message extra message when using completion
+    " set shortmess+=c
 
 else
     " Standard vim specific commands
