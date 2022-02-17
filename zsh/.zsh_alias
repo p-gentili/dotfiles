@@ -1,6 +1,5 @@
 # GIT
 alias gco="git checkout"
-alias gprunelocal="git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D $branch; done"
 
 # ls
 alias ll="ls -l --color"
