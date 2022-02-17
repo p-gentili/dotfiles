@@ -19,8 +19,8 @@ autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 # Fzf bindings
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-source /usr/share/doc/fzf/examples/completion.zsh
+source ~/dotfiles/zsh/fzf/key-bindings.zsh
+source ~/dotfiles/zsh/fzf/completion.zsh
 
 # Load version control information
 autoload -Uz vcs_info
