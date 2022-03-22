@@ -35,6 +35,12 @@ setopt PROMPT_SUBST
 PROMPT='%~ '
 RPROMPT=\$vcs_info_msg_0_
 
+# Save history to file
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
+
 # Path
 export PATH=$HOME/.local/bin:$PATH
 source $HOME/.cargo/env
