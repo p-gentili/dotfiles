@@ -120,37 +120,4 @@ let g:airline#extensions#branch#enabled = 1
 let g:airline_section_x=''  " hide file format from airline
 let g:airline_section_y=''  " hide encoding from airline
 
-" set mouse=a         " use mouse
-
-if has('nvim')
-    " Neovim specific commands
-    tnoremap <Esc> <C-\><C-n>
-
-    " lua << EOF
-    "     require'lspconfig'.pyls.setup{
-    "         on_attach=require'completion'.on_attach
-    "     }
-    " EOF
-    " use omni completion provided by lsp
-    " autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
-
-    " Use <Tab> and <S-Tab> to navigate through popup menu
-    " inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-    " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-    "
-    " Set completeopt to have a better completion experience
-    " set completeopt=menuone,noinsert,noselect
-    "
-    " Disable auto popup for completion
-    " let g:completion_enable_auto_popup = 0
-    "
-    " map <c-p> to manually trigger completion
-    " map <silent> <c-p> <Plug>(completion_trigger)
-    "
-    " Avoid showing message extra message when using completion
-    " set shortmess+=c
-
-else
-    " Standard vim specific commands
-endif
-
+set mouse=a
