@@ -98,10 +98,5 @@ endif
 " FZF
 nnoremap <silent> <C-t> :Files<CR>
 
-" VSC
-autocmd BufWritePost * GitGutter
-
 " Airline
 let g:airline#extensions#branch#enabled = 1
-let g:airline_section_x=''  " hide file format from airline
-let g:airline_section_y=''  " hide encoding from airline
