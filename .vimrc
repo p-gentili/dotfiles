@@ -9,7 +9,6 @@ endif
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " VSC
-Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
 " TMUX
