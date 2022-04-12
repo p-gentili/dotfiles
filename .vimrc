@@ -6,8 +6,6 @@ else
 endif
 
 " Syntax
-" Plug 'w0rp/ale'
-" Plug 'https://github.com/leafgarland/typescript-vim.git'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " VSC
@@ -20,19 +18,11 @@ Plug 'christoomey/vim-tmux-navigator'
 " AIRLINE
 Plug 'vim-airline/vim-airline'
 
-" Autoformat
-Plug 'Chiel92/vim-autoformat'
-
 " Themes
-Plug 'sonph/onehalf', { 'rtp': 'vim' }
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'arcticicestudio/nord-vim'
 Plug 'morhetz/gruvbox'
 
 if has('nvim')
     " Neovim specific plugs
-    " Plug 'neovim/nvim-lspconfig'
-    " Plug 'nvim-lua/completion-nvim'
 else
     " Standard vim specific plugs
 endif
@@ -53,7 +43,7 @@ colorscheme gruvbox
 set background=dark
 
 set number              " show line numbers
-set relativenumber      " show relative line numbers
+" set relativenumber      " show relative line numbers
 
 set tabstop=4           " number of visual spaces per TAB
 set softtabstop=4       " number of spaces in tab when editing
@@ -61,7 +51,6 @@ set shiftwidth=4        " number of spaces when shifting
 set expandtab           " tabs are spaces
 set backspace=indent,eol,start
 set autoindent
-
 set cursorline          " highlight current line
 
 set foldenable          " enable folding
@@ -72,9 +61,18 @@ set foldmethod=indent   " fold based on indent level
 
 set wildmenu            " menu for completion
 
+" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
+" unicode characters in the file autoload/float.vim
+set encoding=utf-8
+
+" TextEdit might fail if hidden is not set.
+set hidden
+
 set fileformat=unix
 set fileformats=unix,dos
 "set nobinary
+
+set mouse=a
 
 " remap esc to jk
 inoremap jk <Esc>
@@ -84,9 +82,6 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-
-" Autoformat
-noremap <F3> :Autoformat<CR>
 
 " gVIM
 if has('win32')
@@ -104,14 +99,6 @@ endif
 " FZF
 nnoremap <silent> <C-t> :Files<CR>
 
-" ALE
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_save =  0
-let g:ale_lint_on_enter =  0
-let g:ale_linters = {
-            \   'python': ['flake8'],
-            \}
-
 " VSC
 autocmd BufWritePost * GitGutter
 
@@ -119,5 +106,3 @@ autocmd BufWritePost * GitGutter
 let g:airline#extensions#branch#enabled = 1
 let g:airline_section_x=''  " hide file format from airline
 let g:airline_section_y=''  " hide encoding from airline
-
-set mouse=a
