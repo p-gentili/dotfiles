@@ -73,6 +73,17 @@ set fileformats=unix,dos
 
 set mouse=a
 
+" Netrw
+let g:netrw_banner = 0
+let g:netrw_liststyle= 3
+let g:netrw_winsize = 20
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+" augroup ProjectDrawer
+"   autocmd!
+"   autocmd VimEnter * :Vexplore
+" augroup END
+
 " remap esc to jk
 inoremap jk <Esc>
 
