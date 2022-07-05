@@ -14,18 +14,18 @@ Plug 'morhetz/gruvbox'
 
 if has('nvim')
     " Neovim specific plugs
-    " Plug 'williamboman/nvim-lsp-installer'
+    Plug 'williamboman/nvim-lsp-installer'
     Plug 'neovim/nvim-lspconfig'
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
+    Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 else
     " Standard vim specific plugs
-
-    " Syntax
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
 endif
-
-" FZF
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -102,14 +102,24 @@ if has('win32')
     imap <C-v> <ESC>"+pa
 endif
 
-" FZF
-nnoremap <silent> <C-t> :Files<CR>
-
 " Airline
 " let g:airline#extensions#branch#enabled = 1
 
 if has('nvim')
+
+    " Find files using Telescope command-line sugar.
+    nnoremap <C-t> <cmd>Telescope find_files<cr>
+    nnoremap <space>ff <cmd>Telescope find_files<cr>
+    nnoremap <space>fg <cmd>Telescope live_grep<cr>
+    nnoremap <space>fb <cmd>Telescope buffers<cr>
+    nnoremap <space>fh <cmd>Telescope help_tags<cr>
+
 lua << EOF
     require('config')
 EOF
+
+else
+
+    " FZF
+    nnoremap <silent> <C-t> :Files<CR>
 endif
