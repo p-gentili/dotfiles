@@ -108,11 +108,16 @@ endif
 if has('nvim')
 
     " Find files using Telescope command-line sugar.
-    nnoremap <C-t> <cmd>Telescope find_files<cr>
-    nnoremap <space>ff <cmd>Telescope find_files<cr>
-    nnoremap <space>fg <cmd>Telescope live_grep<cr>
-    nnoremap <space>fb <cmd>Telescope buffers<cr>
-    nnoremap <space>fh <cmd>Telescope help_tags<cr>
+    nnoremap <C-t><C-f> <cmd>Telescope find_files<cr>
+    nnoremap <C-t><C-g> <cmd>Telescope live_grep<cr>
+    nnoremap <C-t><C-b> <cmd>Telescope buffers<cr>
+    nnoremap <C-t><C-t> <cmd>Telescope help_tags<cr>
+
+    " Access GIT data using Telescope
+    nnoremap <C-g><C-c> <cmd>Telescope git_commits<cr>
+    nnoremap <C-g><C-b> <cmd>Telescope git_branches<cr>
+    nnoremap <C-g><C-s> <cmd>Telescope git_status<cr>
+
 
 lua << EOF
     require('config')
