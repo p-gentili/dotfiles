@@ -43,14 +43,21 @@ call plug#end()
 syntax enable           " enable syntax processing
 colorscheme gruvbox
 set background=dark
+set encoding=utf-8
+set fileformat=unix
+set fileformats=unix,dos
+set mouse=a
+"set nobinary
+
 
 set number              " show line numbers
-" set relativenumber      " show relative line numbers
+set relativenumber      " show relative line numbers
 
 set tabstop=4           " number of visual spaces per TAB
 set softtabstop=4       " number of spaces in tab when editing
 set shiftwidth=4        " number of spaces when shifting
 set expandtab           " tabs are spaces
+
 set backspace=indent,eol,start
 set autoindent
 set cursorline          " highlight current line
@@ -62,21 +69,10 @@ set foldlevel=99        " open most folds by default
 set foldmethod=indent   " fold based on indent level
 
 set wildmenu            " menu for completion
-
-" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
-" unicode characters in the file autoload/float.vim
-set encoding=utf-8
+set completeopt=menu,menuone,noselect
 
 " TextEdit might fail if hidden is not set.
 set hidden
-
-set fileformat=unix
-set fileformats=unix,dos
-"set nobinary
-
-set mouse=a
-
-set completeopt=menu,menuone,noselect
 
 " Netrw
 let g:netrw_banner = 0
@@ -97,19 +93,6 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-
-" gVIM
-if has('win32')
-    set guioptions-=m  "remove menu bar
-    set guioptions-=T  "remove toolbar
-    set guioptions-=r  "remove right-hand scroll bar
-    set guioptions-=L  "remove left-hand scroll bar
-    set shell=powershell
-    vmap <C-c> "+yi
-    vmap <C-x> "+c
-    vmap <C-v> c<ESC>"+p
-    imap <C-v> <ESC>"+pa
-endif
 
 " Airline
 " let g:airline#extensions#branch#enabled = 1
