@@ -1,12 +1,4 @@
-" plugins manager
-if has('win32')
-    call plug#begin('C:\Users\pgentili\_vimfiles\vim_plugged')
-else
-    call plug#begin("~/.vim/plugged")
-endif
-
-" Syntax
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+call plug#begin()
 
 " VSC
 Plug 'tpope/vim-fugitive'
@@ -22,13 +14,25 @@ Plug 'morhetz/gruvbox'
 
 if has('nvim')
     " Neovim specific plugs
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
+    Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'hrsh7th/cmp-cmdline'
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-vsnip'
+    Plug 'hrsh7th/vim-vsnip'
+    Plug 'hrsh7th/vim-vsnip-integ'
 else
     " Standard vim specific plugs
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
 endif
-
-" FZF
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -72,6 +76,8 @@ set fileformats=unix,dos
 
 set mouse=a
 
+set completeopt=menu,menuone,noselect
+
 " Netrw
 let g:netrw_banner = 0
 let g:netrw_liststyle= 3
@@ -105,8 +111,32 @@ if has('win32')
     imap <C-v> <ESC>"+pa
 endif
 
-" FZF
-nnoremap <silent> <C-t> :Files<CR>
-
 " Airline
-let g:airline#extensions#branch#enabled = 1
+" let g:airline#extensions#branch#enabled = 1
+
+if has('nvim')
+
+    " Find files using Telescope command-line sugar.
+    nnoremap <C-t><C-f> <cmd>Telescope find_files<cr>
+    nnoremap <C-t><C-g> <cmd>Telescope live_grep<cr>
+    nnoremap <C-t><C-b> <cmd>Telescope buffers<cr>
+    nnoremap <C-t><C-t> <cmd>Telescope help_tags<cr>
+
+    " Access GIT data using Telescope
+    nnoremap <C-g><C-c> <cmd>Telescope git_commits<cr>
+    nnoremap <C-g><C-b> <cmd>Telescope git_branches<cr>
+    nnoremap <C-g><C-s> <cmd>Telescope git_status<cr>
+
+
+lua << EOF
+    require('config')
+EOF
+
+else
+    " FZF
+    nnoremap <silent> <C-t><C-f> :Files<CR>
+    nnoremap <silent> <C-t><C-b> :Buffers<CR>
+    nnoremap <silent> <C-t><C-g> :Rg<CR>
+    nnoremap <silent> <C-t><C-c> :Commands<CR>
+    nnoremap <silent> <C-g><C-c> :Commits<CR>
+endif
