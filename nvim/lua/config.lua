@@ -15,11 +15,6 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
--- LSP
-require("nvim-lsp-installer").setup {
-  automatic_installation = true
-}
-
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
@@ -59,7 +54,6 @@ local lsp_flags = {
 }
 
 local lspconfig = require("lspconfig")
-
 lspconfig.pyright.setup {
     on_attach = on_attach,
     flags = lsp_flags,

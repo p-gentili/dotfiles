@@ -14,7 +14,6 @@ Plug 'morhetz/gruvbox'
 
 if has('nvim')
     " Neovim specific plugs
-    Plug 'williamboman/nvim-lsp-installer'
     Plug 'neovim/nvim-lspconfig'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-lua/plenary.nvim'
