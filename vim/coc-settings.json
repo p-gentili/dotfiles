@@ -1,7 +1,7 @@
 {
     "pyright.enable": true,
+    "pyright.organizeimports.provider": "isort",
     "python.pythonPath": "python3",
     "python.formatting.provider": "black",
-    "python.linting.flake8Enabled": true,
-    "pyright.organizeimports.provider": "isort"
+    "python.linting.flake8Enabled": true
 }
