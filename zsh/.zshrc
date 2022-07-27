@@ -43,6 +43,5 @@ setopt appendhistory
 
 # Path
 export PATH=$HOME/.local/bin:$PATH
-source $HOME/.cargo/env
-
+[ -f ~/.cargo/env ] && source ~/.cargo/env
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
