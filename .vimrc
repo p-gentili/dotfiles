@@ -122,6 +122,7 @@ else
     nnoremap <silent> <C-t><C-g> :Rg<CR>
     nnoremap <silent> <C-g><C-c> :Commits<CR>
     nnoremap <silent> <C-c><C-c> :Command<CR>
+    nnoremap <silent> <C-c><C-f> :Format<CR>
 
     " COC
     " Use tab for trigger completion with characters ahead and navigate.
