@@ -1,6 +1,6 @@
 # git
 alias gco="git checkout"
-alias gb="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) %(if)%(upstream)%(then)%(color:blue)%(upstream:track)%(color:reset) %(end)- %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate"
+alias gbv="git branch -vv"
 
 # ls
 alias ll="ls -l --color"
