@@ -49,6 +49,8 @@ set fileformats=unix,dos
 set mouse=a
 "set nobinary
 
+set ignorecase
+set smartcase
 
 set number              " show line numbers
 set relativenumber      " show relative line numbers
