@@ -4,5 +4,6 @@
     "pyright.organizeimports.provider": "isort",
     "python.pythonPath": "python3",
     "python.formatting.provider": "black",
+    "python.formatting.blackPath": "~/.local/bin/black",
     "python.linting.flake8Enabled": true
 }
