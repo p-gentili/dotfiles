@@ -19,3 +19,4 @@ ln -sf $(pwd)/zsh/.zshrc $HOME/.zshrc
 ln -sf $(pwd)/zsh/.zsh_alias $HOME/.zsh_alias
 
 ln -sf $(pwd)/sway $HOME/.config/sway
+ln -sf $(pwd)/kitty $HOME/.config/kitty
