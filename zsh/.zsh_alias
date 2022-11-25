@@ -1,6 +1,9 @@
 # git
 alias gco="git checkout"
 alias gbv="git branch -vv"
+function gbm() {
+    (git checkout main || git checkout master) && git checkout -b $1
+}
 
 # ls
 alias ll="ls -l -h --color=auto"
