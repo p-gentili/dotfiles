@@ -3,8 +3,8 @@ alias gco="git checkout"
 alias gbv="git branch -vv"
 
 # ls
-alias ll="ls -l --color"
-alias lla="ls -al --color"
+alias ll="ls -l -h --color=auto"
+alias lla="ll -a"
 
 # vim
 alias vi="vim"
