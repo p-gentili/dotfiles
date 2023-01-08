@@ -2,6 +2,7 @@
     "coc.preferences.formatOnSaveFiletypes": ["python"],
     "pyright.enable": true,
     "pyright.organizeimports.provider": "isort",
+    "pyright.inlayHints.variableTypes": false,
     "python.pythonPath": "python3",
     "python.formatting.provider": "black",
     "python.formatting.blackPath": "~/.local/bin/black",
