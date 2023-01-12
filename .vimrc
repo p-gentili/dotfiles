@@ -12,6 +12,9 @@ Plug 'christoomey/vim-tmux-navigator'
 " Themes
 Plug 'morhetz/gruvbox'
 
+" Nerdtree
+Plug 'preservim/nerdtree'
+
 if has('nvim')
     " Neovim specific plugs
     Plug 'neovim/nvim-lspconfig'
@@ -128,6 +131,9 @@ else
     nnoremap <silent> <C-g><C-c> :Commits<CR>
     nnoremap <silent> <C-c><C-c> :Command<CR>
     nnoremap <silent> <C-c><C-f> :Format<CR>
+
+    "NERDTree
+    nnoremap <silent> <C-c><C-n> :NERDTreeFocus<CR>
 
     " COC
     " Use tab for trigger completion with characters ahead and navigate.
