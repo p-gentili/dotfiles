@@ -133,7 +133,7 @@ else
     nnoremap <silent> <C-c><C-f> :Format<CR>
 
     "NERDTree
-    nnoremap <silent> <C-c><C-n> :NERDTreeFocus<CR>
+    nnoremap <silent> <C-t><C-n> :NERDTreeFocus<CR>
 
     " COC
     " Use tab for trigger completion with characters ahead and navigate.
