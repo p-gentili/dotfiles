@@ -74,13 +74,13 @@ set foldlevel=99        " open most folds by default
 set foldmethod=indent   " fold based on indent level
 
 set wildmenu            " menu for completion
-set completeopt=menu,menuone,noselect
+set completeopt=menu,menuone
 
 " TextEdit might fail if hidden is not set.
 set hidden
 
 " Netrw
-let g:netrw_banner = 1
+let g:netrw_banner = 0
 let g:netrw_liststyle= 3
 " let g:netrw_winsize = 20
 let g:netrw_altv = 1
@@ -126,7 +126,7 @@ EOF
 else
     " FZF
     nnoremap <silent> <C-t><C-f> :Files<CR>
-    nnoremap <silent> <C-t><C-b> :Buffers<CR>
+    " nnoremap <silent> <C-t><C-b> :Buffers<CR>
     nnoremap <silent> <C-t><C-g> :Rg<CR>
     nnoremap <silent> <C-g><C-c> :Commits<CR>
     nnoremap <silent> <C-c><C-c> :Command<CR>
