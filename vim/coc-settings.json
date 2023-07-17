@@ -1,5 +1,5 @@
 {
-    "coc.preferences.formatOnSaveFiletypes": ["python", "rust"],
+    "coc.preferences.formatOnSaveFiletypes": ["python", "rust", "dart"],
     "pyright.enable": true,
     "pyright.organizeimports.provider": "isort",
     "pyright.inlayHints.variableTypes": false,
@@ -7,5 +7,6 @@
     "python.formatting.provider": "black",
     "python.formatting.blackPath": "~/.local/bin/black",
     "python.linting.flake8Enabled": true,
-    "rust-analyzer.checkOnSave.allTargets": false
+    "rust-analyzer.checkOnSave.allTargets": false,
+    "flutter.autoOpenDevLog": true
 }
