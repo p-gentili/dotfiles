@@ -21,3 +21,4 @@ ln -sf $(pwd)/zsh/.zsh_alias $HOME/.zsh_alias
 ln -sf $(pwd)/sway $HOME/.config/sway
 ln -sf $(pwd)/kitty $HOME/.config/kitty
 ln -sf $(pwd)/zellij $HOME/.config/zellij
+ln -sf $(pwd)/foot $HOME/.config/foot
