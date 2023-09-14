@@ -1,5 +1,5 @@
 {
-    "coc.preferences.formatOnSaveFiletypes": ["python", "rust", "dart"],
+    "coc.preferences.formatOnSaveFiletypes": ["python", "rust", "dart", "javascript", "typescript", "yaml"],
     "pyright.enable": true,
     "pyright.organizeimports.provider": "isort",
     "pyright.inlayHints.variableTypes": false,
