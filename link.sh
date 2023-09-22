@@ -12,6 +12,8 @@ ln -sf $(pwd)/.vimrc $HOME/.vimrc
 ln -sf $(pwd)/vim/coc-settings.json $HOME/.vim/coc-settings.json
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 ln -sf $(pwd)/.tmux.conf $HOME/.tmux.conf
 

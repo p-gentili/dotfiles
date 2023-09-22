@@ -1,27 +1,18 @@
 call plug#begin()
 
-" VSC
-Plug 'tpope/vim-fugitive'
-
 " TMUX
 Plug 'christoomey/vim-tmux-navigator'
-
-" AIRLINE
-" Plug 'vim-airline/vim-airline'
 
 " Themes
 Plug 'morhetz/gruvbox'
 
-" Nerdtree
-Plug 'preservim/nerdtree'
-
 if has('nvim')
     " Neovim specific plugs
+    Plug 'nvim-telescope/telescope.nvim'
+    Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
     Plug 'neovim/nvim-lspconfig'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope.nvim'
-    Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-path'
@@ -38,10 +29,6 @@ else
 endif
 
 call plug#end()
-
-"if (has("termguicolors"))
-"  set termguicolors
-"endif
 
 syntax enable           " enable syntax processing
 colorscheme gruvbox
@@ -102,22 +89,7 @@ nnoremap <C-H> <C-W><C-H>
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
-" Airline
-" let g:airline#extensions#branch#enabled = 1
-
 if has('nvim')
-
-    " Find files using Telescope command-line sugar.
-    nnoremap <C-t><C-f> <cmd>Telescope find_files<cr>
-    nnoremap <C-t><C-g> <cmd>Telescope live_grep<cr>
-    nnoremap <C-t><C-b> <cmd>Telescope buffers<cr>
-    nnoremap <C-t><C-t> <cmd>Telescope help_tags<cr>
-
-    " Access GIT data using Telescope
-    nnoremap <C-g><C-c> <cmd>Telescope git_commits<cr>
-    nnoremap <C-g><C-b> <cmd>Telescope git_branches<cr>
-    nnoremap <C-g><C-s> <cmd>Telescope git_status<cr>
-
 
 lua << EOF
     require('config')

@@ -1,5 +1,10 @@
 -- Telescope
 require('telescope').load_extension('fzf')
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<C-t><C-f>', builtin.find_files, {})
+vim.keymap.set('n', '<C-t><C-g>', builtin.live_grep, {})
+vim.keymap.set('n', '<C-t><C-b>', builtin.buffers, {})
+vim.keymap.set('n', '<C-t><C-t>', builtin.help_tags, {})
 
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
@@ -54,12 +59,19 @@ local lsp_flags = {
 }
 
 local lspconfig = require("lspconfig")
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+require'cmp'.setup {
+  sources = {
+    { name = 'nvim_lsp' }
+  }
+}
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 lspconfig.pyright.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities
 }
+
 lspconfig.clangd.setup {
     on_attach = on_attach,
     flags = lsp_flags,
