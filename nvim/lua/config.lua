@@ -9,7 +9,7 @@ vim.keymap.set('n', '<C-t><C-t>', builtin.help_tags, {})
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
-  ensure_installed = { "c", "python" },
+  ensure_installed = { "vim", "lua", "c", "python" , "rust", "dart" },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
