@@ -6,6 +6,8 @@ Plug 'christoomey/vim-tmux-navigator'
 " Themes
 Plug 'morhetz/gruvbox'
 
+Plug 'tpope/vim-fugitive'
+
 if has('nvim')
     " Neovim specific plugs
     Plug 'nvim-telescope/telescope.nvim'
