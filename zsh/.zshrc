@@ -11,6 +11,7 @@ fi
 
 # Plugins
 source ~/dotfiles/zsh/fancy-ctrl-z.plugin.zsh
+source ~/dotfiles/zsh/git-auto-fetch.plugin.zsh
 source ~/dotfiles/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 bindkey '^ ' autosuggest-accept
 
