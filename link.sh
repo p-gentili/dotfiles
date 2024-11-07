@@ -22,7 +22,8 @@ ln -sf $(pwd)/zsh/.zsh_alias $HOME/.zsh_alias
 
 # Other apps
 ln -sf $(pwd)/.tmux.conf $HOME/.tmux.conf
+ln -sf $(pwd)/foot $HOME/.config/foot
+ln -sf $(pwd)/helix $HOME/.config/helix
 ln -sf $(pwd)/sway $HOME/.config/sway
 ln -sf $(pwd)/waybar $HOME/.config/waybar
-ln -sf $(pwd)/foot $HOME/.config/foot
 ln -sf $(pwd)/zellij $HOME/.config/zellij
