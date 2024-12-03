@@ -13,8 +13,14 @@ function cl() {
     cd $1 && ll
 }
 
-# vim
-alias vi="vim"
+# vim / neovim
+if command -v nvim >/dev/null 2>&1; then
+  alias vi='nvim'
+elif command -v vim >/dev/null 2>&1; then
+  alias vi='vim'
+else
+  echo "Neither nvim nor vim is installed. Please install one to use 'vi'."
+fi
 
 # apt
 alias apt-list-man="comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)"
@@ -22,3 +28,4 @@ alias apt-list-man="comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/lo
 # ssh
 alias ssh-nosignature="ssh -o 'StrictHostKeyChecking=no' -o 'UserKnownHostsFile=/dev/null'"
 alias scp-nosignature="scp -o 'StrictHostKeyChecking=no' -o 'UserKnownHostsFile=/dev/null'"
+
