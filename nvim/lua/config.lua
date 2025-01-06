@@ -31,14 +31,22 @@ require'nvim-treesitter.configs'.setup {
 -- Reserve a space in the gutter
 vim.opt.signcolumn = 'yes'
 
+require('blink.cmp').setup({
+    keymap = {
+        preset="enter"
+    },
+    completion = { 
+        menu = { auto_show = function(ctx) return ctx.mode ~= 'cmdline' end }
+    }
+})
 
--- Add cmp_nvim_lsp capabilities settings to lspconfig
+-- Add blink.cmp capabilities settings to lspconfig
 -- This should be executed before you configure any language server
 local lspconfig_defaults = require('lspconfig').util.default_config
 lspconfig_defaults.capabilities = vim.tbl_deep_extend(
   'force',
   lspconfig_defaults.capabilities,
-  require('cmp_nvim_lsp').default_capabilities()
+  require('blink.cmp').get_lsp_capabilities()
 )
 
 -- This is where you enable features that only work
@@ -68,20 +76,4 @@ require('lspconfig').clangd.setup({})
 require('lspconfig').basedpyright.setup({})
 require('lspconfig').ruff.setup({})
 
-local cmp = require('cmp')
 
-cmp.setup({
-  sources = {
-    {name = 'nvim_lsp'},
-  },
-  snippet = {
-    expand = function(args)
-      -- You need Neovim v0.10 to use vim.snippet
-      vim.snippet.expand(args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-  }),
-})
