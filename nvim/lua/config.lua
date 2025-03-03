@@ -73,7 +73,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
 require('lspconfig').clangd.setup({})
 
 -- Python
-require('lspconfig').basedpyright.setup({})
+require("lspconfig").basedpyright.setup {
+    settings = {
+        basedpyright = {
+            analysis = {
+                diagnosticSeverityOverrides = {
+                    reportUnusedCallResult = false,
+                },
+            },
+        },
+    }
+}
 require('lspconfig').ruff.setup({})
 
 
