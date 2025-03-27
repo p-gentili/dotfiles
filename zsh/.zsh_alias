@@ -26,6 +26,6 @@ fi
 alias apt-list-man="comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)"
 
 # ssh
-alias ssh-nosignature="ssh -o 'StrictHostKeyChecking=no' -o 'UserKnownHostsFile=/dev/null'"
-alias scp-nosignature="scp -o 'StrictHostKeyChecking=no' -o 'UserKnownHostsFile=/dev/null'"
+alias ssh-nosign="ssh -o 'StrictHostKeyChecking=no' -o 'UserKnownHostsFile=/dev/null'"
+alias scp-nosign="scp -o 'StrictHostKeyChecking=no' -o 'UserKnownHostsFile=/dev/null'"
 
