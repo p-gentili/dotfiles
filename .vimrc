@@ -16,6 +16,7 @@ if has('nvim')
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-lua/plenary.nvim'
     Plug 'Saghen/blink.cmp', { 'do': 'cargo +nightly clean && cargo +nightly build --release' }
+    Plug 'stevearc/conform.nvim'
 else
     " Standard vim specific plugs
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
