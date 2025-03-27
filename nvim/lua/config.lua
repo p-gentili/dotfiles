@@ -33,11 +33,10 @@ vim.opt.signcolumn = 'yes'
 
 require('blink.cmp').setup({
     keymap = {
-        preset="enter"
+        preset="super-tab" ,
+        ['<CR>'] = { 'accept', 'fallback' },
     },
-    completion = { 
-        menu = { auto_show = function(ctx) return ctx.mode ~= 'cmdline' end }
-    }
+    signature = { enabled = true }
 })
 
 -- Add blink.cmp capabilities settings to lspconfig
