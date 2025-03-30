@@ -89,7 +89,7 @@ require('lspconfig').ruff.setup({})
 -- Conform
 require("conform").setup({
   formatters_by_ft = {
-    python = { "isort", "ruff_format" },  -- ruff format is king: run it as last
+    python = { "ruff_format", "ruff_organize_imports" },
     rust = { "rustfmt", lsp_format = "fallback" },
   },
   format_on_save = function(bufnr)
