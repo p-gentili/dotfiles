@@ -1,9 +1,14 @@
 # git
-alias gco="git checkout"
 alias gbv="git branch -vv"
+alias gco="git checkout"
+function gdo() {
+    git fetch -p
+    git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -D
+}
 function gbm() {
     (git checkout main || git checkout master) && git checkout -b $1
 }
+
 
 # ls
 alias ll="ls -l -h --color=auto"
