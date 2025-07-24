@@ -11,9 +11,11 @@ function gbm() {
 
 
 # ls
-alias ll="ls -l -h --color=auto"
+# alias ll="exa -l || ls -l -h --color=auto"
+function ll() {
+    exa -l $@ || ls -l -h --color=auto $@
+}
 alias lla="ll -a"
-
 function cl() {
     cd $1 && ll
 }
