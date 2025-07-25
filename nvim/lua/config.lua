@@ -11,6 +11,7 @@ require('telescope').load_extension('fzf')
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<C-t><C-f>', builtin.find_files, {})
 vim.keymap.set('n', '<C-t><C-g>', builtin.live_grep, {})
+vim.keymap.set('n', '<C-t><C-d>', builtin.git_files, {})
 vim.keymap.set('n', '<C-t><C-b>', builtin.buffers, {})
 vim.keymap.set('n', '<C-t><C-t>', builtin.help_tags, {})
 
