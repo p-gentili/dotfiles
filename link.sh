@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 # Neovim
 mkdir -p ~/.config/nvim
@@ -7,7 +8,7 @@ ln -sf $(pwd)/.vimrc $HOME/.config/nvim/init.vim
 ln -sf $(pwd)/nvim/lua/config.lua $HOME/.config/nvim/lua/config.lua
 
 # Vim
-mkdir ~/.vim
+mkdir -p ~/.vim
 ln -sf $(pwd)/.vimrc $HOME/.vimrc
 ln -sf $(pwd)/vim/coc-settings.json $HOME/.vim/coc-settings.json
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -22,8 +23,8 @@ ln -sf $(pwd)/zsh/.zsh_alias $HOME/.zsh_alias
 
 # Other apps
 ln -sf $(pwd)/.tmux.conf $HOME/.tmux.conf
-ln -sf $(pwd)/foot $HOME/.config/foot
-ln -sf $(pwd)/helix $HOME/.config/helix
-ln -sf $(pwd)/sway $HOME/.config/sway
-ln -sf $(pwd)/waybar $HOME/.config/waybar
-ln -sf $(pwd)/zellij $HOME/.config/zellij
+ln -snf $(pwd)/foot $HOME/.config/foot
+ln -snf $(pwd)/helix $HOME/.config/helix
+ln -snf $(pwd)/sway $HOME/.config/sway
+ln -snf $(pwd)/waybar $HOME/.config/waybar
+ln -snf $(pwd)/zellij $HOME/.config/zellij
