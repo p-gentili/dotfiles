@@ -69,22 +69,34 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- C
-require('lspconfig').clangd.setup({})
 
--- Python
-require("lspconfig").basedpyright.setup {
-    settings = {
-        basedpyright = {
-            analysis = {
-                diagnosticSeverityOverrides = {
-                    reportUnusedCallResult = false,
+-- LSP ( 0.11+ )
+local lsps = {
+    { "clangd" },
+    {
+        "basedpyright",
+        {
+            settings = {
+                basedpyright = {
+                    analysis = {
+                        diagnosticSeverityOverrides = {
+                            reportUnusedCallResult = false,
+                        },
+                    },
                 },
-            },
-        },
-    }
+            }
+        }
+    },
+    { "ruff" },
 }
-require('lspconfig').ruff.setup({})
+
+for _, lsp in pairs(lsps) do
+    local name, config = lsp[1], lsp[2]
+    vim.lsp.enable(name)
+    if config then
+        vim.lsp.config(name, config)
+    end
+end
 
 
 -- Conform
