@@ -72,6 +72,9 @@ let g:netrw_altv = 1
 "   autocmd VimEnter * :Vexplore
 " augroup END
 
+" set leader to space
+let g:mapleader = "\<Space>"
+
 " remap esc to jk
 inoremap jk <Esc>
 

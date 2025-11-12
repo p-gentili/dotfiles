@@ -9,11 +9,9 @@ vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {f
 -- Telescope
 require('telescope').load_extension('fzf')
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<C-t><C-f>', builtin.find_files, {})
-vim.keymap.set('n', '<C-t><C-g>', builtin.live_grep, {})
-vim.keymap.set('n', '<C-t><C-d>', builtin.git_files, {})
-vim.keymap.set('n', '<C-t><C-b>', builtin.buffers, {})
-vim.keymap.set('n', '<C-t><C-t>', builtin.help_tags, {})
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fd', builtin.git_files, { desc = 'Telescope find Git files' })
 
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
