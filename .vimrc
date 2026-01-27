@@ -10,6 +10,7 @@ Plug 'tpope/vim-fugitive'
 
 if has('nvim')
     " Neovim specific plugs
+    Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
     Plug 'neovim/nvim-lspconfig'
@@ -17,6 +18,8 @@ if has('nvim')
     Plug 'nvim-lua/plenary.nvim'
     Plug 'Saghen/blink.cmp', { 'do': 'cargo +nightly clean && cargo +nightly build --release' }
     Plug 'stevearc/conform.nvim'
+    Plug 'stevearc/oil.nvim'
+    Plug 'itsfernn/auto-gnome-theme.nvim'
 else
     " Standard vim specific plugs
     Plug 'neoclide/coc.nvim', {'branch': 'release'}

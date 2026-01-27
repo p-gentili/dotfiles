@@ -6,20 +6,30 @@ vim.diagnostic.config({
 vim.o.updatetime = 250
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 
+-- Theme
+require("auto-gnome-theme").setup({
+    -- theme = "gruvbox",
+    theme = "catppuccin",
+})
+
 -- Telescope
 require('telescope').load_extension('fzf')
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fd', builtin.git_files, { desc = 'Telescope find Git files' })
+vim.keymap.set("n", "<leader>fj", builtin.jumplist)
 
 -- Treesitter
-require'nvim-treesitter.configs'.setup {
+require'nvim-treesitter'.setup {
   -- A list of parser names, or "all"
   ensure_installed = { "vim", "lua", "c", "python" , "rust", "dart" },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
+
+  lazy = false,
+  build = ':TSUpdate',
 
   highlight = {
     -- `false` will disable the whole extension
@@ -144,3 +154,6 @@ vim.api.nvim_create_user_command("FormatEnable", function()
 end, {
   desc = "Re-enable autoformat-on-save",
 })
+
+-- Oil
+require("oil").setup()
