@@ -25,12 +25,17 @@ else
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
+    Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 endif
 
 call plug#end()
 
 syntax enable           " enable syntax processing
-colorscheme gruvbox
+if has('nvim')
+    colorscheme catppuccin-mocha
+else
+    colorscheme catppuccin_mocha
+endif
 set background=dark
 set encoding=utf-8
 set fileformat=unix
