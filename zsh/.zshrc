@@ -64,5 +64,14 @@ if [ -d ~/.pyenv ]; then
     eval "$(pyenv init -)"
 fi
 
+echo "export PATH=~/.npm-global/bin:$PATH" >> ~/.profile
+
+. "$HOME.local/bin/env"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # Plugins - Must source at the end
 source ~/dotfiles/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+
