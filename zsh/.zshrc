@@ -51,7 +51,10 @@ RPROMPT=\$vcs_info_msg_0_
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
-setopt appendhistory
+setopt APPEND_HISTORY          # append, don’t overwrite
+setopt INC_APPEND_HISTORY      # write history immediately
+setopt HIST_IGNORE_ALL_DUPS    # remove older duplicate commands
+setopt HIST_REDUCE_BLANKS      # remove superfluous blanks
 
 # Path
 export PATH=$HOME/.local/bin:$PATH
