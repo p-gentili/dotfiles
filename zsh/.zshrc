@@ -29,7 +29,22 @@ precmd() { vcs_info }
 
 # Format the vcs_info_msg_0_ variable
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:git:*' formats '%F{160}%u%f %F{40}%c%f %F{208}(%b)%f '
+zstyle ':vcs_info:git:*' formats '%F{160}%u%f %F{40}%c%f %F{208}(%m%b)%f'
+zstyle ':vcs_info:git:*' actionformats '%F{160}%u%f %F{40}%c%f %F{208}(%m%b|%a)%f'
+
+# Show ahead/behind origin indicator via set-message hook
+zstyle ':vcs_info:git*+set-message:*' hooks git-remote-status
+function +vi-git-remote-status() {
+  local ahead behind remote
+  remote=${$(git rev-parse --verify @{upstream} 2>/dev/null)} || return 0
+  ahead=$(git rev-list @{upstream}..HEAD 2>/dev/null | wc -l | tr -d ' ')
+  behind=$(git rev-list HEAD..@{upstream} 2>/dev/null | wc -l | tr -d ' ')
+  local indicators=""
+  (( ahead > 0 )) && indicators+="↑${ahead}"
+  (( behind > 0 )) && indicators+="↓${behind}"
+  [[ -n "$indicators" ]] && indicators+=" "
+  hook_com[misc]+="${indicators}"
+}
 
 # Make relative path compatible with SSO accounts
 function prompt_pwd_relative_to_home() {
