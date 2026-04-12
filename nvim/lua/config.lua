@@ -6,12 +6,6 @@ vim.diagnostic.config({
 vim.o.updatetime = 250
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 
--- Theme
-require("auto-gnome-theme").setup({
-    -- theme = "gruvbox",
-    theme = "catppuccin",
-})
-
 -- Telescope
 require('telescope').load_extension('fzf')
 local builtin = require('telescope.builtin')
