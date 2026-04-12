@@ -16,6 +16,10 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
+# Binaries
+mkdir -p ~/.local/bin
+chmod +x $(pwd)/.local/bin/*
+ln -snf $(pwd)/.local/bin/* ~/.local/bin
 
 # ZSH
 ln -sf $(pwd)/zsh/.zshrc $HOME/.zshrc
@@ -29,3 +33,4 @@ ln -snf $(pwd)/sway $HOME/.config/sway
 ln -snf $(pwd)/waybar $HOME/.config/waybar
 ln -snf $(pwd)/zellij $HOME/.config/zellij
 ln -snf $(pwd)/kitty $HOME/.config/kitty
+ln -snf $(pwd)/mako $HOME/.config/mako
