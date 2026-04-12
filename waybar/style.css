@@ -1,0 +1,49 @@
+#waybar {
+    background-color: rgba(40, 40, 40, 0.70);
+    color: #ffffff;
+    border-radius: 25;       /* Rounded corners */
+}
+
+#workspaces {
+  padding: 2px 2px;
+}
+
+#workspaces button {
+  padding: 3px 5px;
+  margin: 0 3px;
+  min-width: 24px;
+  background: transparent;
+  color: #aaaaaa;
+  border: none;
+  border-radius: 25px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+#workspaces button.active {
+  background: #ccac56;
+  color: #1e1e2e;
+  border-radius: 8px;
+}
+
+#workspaces button:hover {
+  background: #444444;
+  color: #ffffff;
+}
+
+#workspaces button.urgent {
+  background: #bf616a;
+  color: #ffffff;
+}
+
+
+#clock,
+#network,
+#cpu,
+#memory,
+#temperature,
+#battery {
+  padding: 10px 15px;
+  font-size: 18px;
+  color: #aaaaaa;
+}
+
