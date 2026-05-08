@@ -91,6 +91,30 @@ local lsps = {
     },
     { "dartls" },
     { "ruff" },
+    {
+        "yamlls",
+        {
+            settings = {
+                yaml = {
+                    format = {
+                        enable = false,
+                    },
+                    schemas = {
+                        ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+                        ["https://raw.githubusercontent.com/canonical/checkbox/main/unit_json_schema/unit.schema.json"] = {
+                            "units/*.yaml",
+                            "units/*/*.yaml",
+                        },
+                    },
+                },
+                redhat = {
+                    telemetry = {
+                        enabled = false,
+                    },
+                },
+            },
+        },
+    },
 }
 
 for _, lsp in pairs(lsps) do
