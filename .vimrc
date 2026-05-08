@@ -16,7 +16,11 @@ if has('nvim')
     Plug 'neovim/nvim-lspconfig'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-lua/plenary.nvim'
-    Plug 'Saghen/blink.cmp', { 'do': 'cargo +nightly clean && cargo +nightly build --release' }
+    Plug 'Saghen/blink.lib'
+    function! BuildBlinkCmp(info)
+        lua require('blink.cmp').build():wait(60000)
+    endfunction
+    Plug 'Saghen/blink.cmp', { 'do': function('BuildBlinkCmp') }
     Plug 'stevearc/conform.nvim'
     Plug 'stevearc/oil.nvim'
     Plug 'itsfernn/auto-gnome-theme.nvim'
