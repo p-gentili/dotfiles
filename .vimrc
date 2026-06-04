@@ -23,7 +23,6 @@ if has('nvim')
     Plug 'Saghen/blink.cmp', { 'do': function('BuildBlinkCmp') }
     Plug 'stevearc/conform.nvim'
     Plug 'stevearc/oil.nvim'
-    Plug 'itsfernn/auto-gnome-theme.nvim'
 else
     " Standard vim specific plugs
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -36,11 +35,12 @@ call plug#end()
 
 syntax enable           " enable syntax processing
 if has('nvim')
-    colorscheme catppuccin-mocha
+    " Theme follows the terminal's light/dark scheme (DEC mode 2031).
+    " Set up in lua/config.lua so catppuccin.setup() runs before colorscheme.
 else
     colorscheme catppuccin_mocha
+    set background=dark
 endif
-set background=dark
 set encoding=utf-8
 set fileformat=unix
 set fileformats=unix,dos

@@ -1,4 +1,12 @@
 
+-- Theme: follow the terminal's light/dark scheme.
+-- kitty flips its palette from the OS (XDG portal) and emits DEC mode 2031;
+-- tmux 3.6 forwards it; Neovim updates &background; catppuccin swaps flavour.
+require("catppuccin").setup({
+  background = { light = "latte", dark = "mocha" },
+})
+vim.cmd.colorscheme("catppuccin")
+
 -- Diagnostics
 vim.diagnostic.config({
   virtual_text = false
