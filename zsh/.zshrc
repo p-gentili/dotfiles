@@ -9,6 +9,11 @@ if [ -f ~/.zsh_custom_alias ]; then
     source ~/.zsh_custom_alias
 fi
 
+# Secrets (not committed - tokens, API keys, etc.)
+if [ -f ~/.zsh_secrets ]; then
+    source ~/.zsh_secrets
+fi
+
 # Plugins
 source ~/dotfiles/zsh/fancy-ctrl-z.plugin.zsh
 source ~/dotfiles/zsh/git-auto-fetch.plugin.zsh

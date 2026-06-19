@@ -16,11 +16,11 @@ if has('nvim')
     Plug 'neovim/nvim-lspconfig'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-lua/plenary.nvim'
-    Plug 'Saghen/blink.lib'
-    function! BuildBlinkCmp(info)
-        lua require('blink.cmp').build():wait(60000)
-    endfunction
-    Plug 'Saghen/blink.cmp', { 'do': function('BuildBlinkCmp') }
+    " Pin to the latest v1 release tag: on a tagged release, blink.cmp's
+    " setup() auto-downloads the prebuilt Rust fuzzy matcher from GitHub
+    " releases (no cargo build, no blink.lib). Tracking main built from
+    " source on every update, which kept breaking.
+    Plug 'Saghen/blink.cmp', { 'tag': 'v1.*' }
     Plug 'stevearc/conform.nvim'
     Plug 'stevearc/oil.nvim'
 else

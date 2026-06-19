@@ -25,6 +25,10 @@ ln -snf $(pwd)/.local/bin/* ~/.local/bin
 ln -sf $(pwd)/zsh/.zshrc $HOME/.zshrc
 ln -sf $(pwd)/zsh/.zsh_alias $HOME/.zsh_alias
 
+# OpenCode
+mkdir -p ~/.config/opencode
+ln -sf $(pwd)/opencode/opencode.jsonc $HOME/.config/opencode/opencode.jsonc
+
 # Other apps
 ln -sf $(pwd)/.tmux.conf $HOME/.tmux.conf
 ln -snf $(pwd)/foot $HOME/.config/foot
