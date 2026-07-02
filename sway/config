@@ -275,4 +275,5 @@ client.unfocused        $mantle   $mantle   $subtext0 $mantle   $mantle
 client.urgent           $red      $red      $base     $red      $red
 
 exec mako
+exec_always nm-applet --indicator
 include /etc/sway/config.d/*

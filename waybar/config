@@ -17,7 +17,6 @@
         "temperature",
         "backlight",
         "pulseaudio",
-        "network",
         "battery",
         "tray"
     ],
@@ -48,10 +47,6 @@
     },
     "memory": {
         "format": "RAM {}%"
-    },
-    "network": {
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ifname} "
     },
     "battery": {
 		"on-click": "~/.local/bin/power-menu",
