@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Pick a power profile via a wofi menu.
+set -euo pipefail
+
+current=$(powerprofilesctl get)
+choice=$(powerprofilesctl list | grep -Eo '(performance|balanced|power-saver)' | sort -u \
+    | wofi --dmenu --prompt "Power [$current]" \
+           --width 220 --height 170 \
+           --location top_right --xoffset -10 --yoffset 40 \
+           --style ~/.config/wofi/style.css)
+
+[ -n "${choice:-}" ] && powerprofilesctl set "$choice"

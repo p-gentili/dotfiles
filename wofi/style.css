@@ -1,24 +1,29 @@
 window {
   margin: 0px;
-  background-color: #eff1f5;   /* base */
-  border: 2px solid #8839ef;   /* mauve */
-  border-radius: 12px;
+  background-color: transparent;   /* let the rounded box below show through */
   font-family: "Noto Sans", sans-serif;
   font-size: 14px;
-  color: #4c4f69;              /* text */
+  color: #4c4f69;                  /* text */
+}
+
+#outer-box {
+  margin: 0px;
+  padding: 8px;
+  background-color: #eff1f5;        /* base */
+  border: 2px solid #8839ef;        /* mauve */
+  border-radius: 12px;
 }
 
 #input {
-  margin: 8px;
+  margin: 4px;
   padding: 8px;
   border: none;
   border-radius: 8px;
-  background-color: #e6e9ef;   /* mantle */
+  background-color: #e6e9ef;        /* mantle */
   color: #4c4f69;
 }
 
-#inner-box { margin: 8px; }
-#outer-box { margin: 4px; }
+#inner-box { margin: 4px; }
 
 #scroll { margin: 0px; }
 
@@ -28,8 +33,8 @@ window {
 }
 
 #entry:selected {
-  background-color: #8839ef;   /* mauve */
-  color: #eff1f5;              /* base */
+  background-color: #8839ef;        /* mauve */
+  color: #eff1f5;                   /* base */
 }
 
 #text:selected { color: #eff1f5; }

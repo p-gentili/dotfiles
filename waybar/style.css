@@ -24,14 +24,21 @@
   transition: background 0.2s ease, color 0.2s ease;
 }
 
+#workspaces button.focused,
 #workspaces button.active {
   background: #8839ef;         /* mauve */
   color: #eff1f5;              /* base  */
+  font-weight: bold;
   border-radius: 8px;
 }
 
-#workspaces button:hover {
+#workspaces button.visible {
   background: #ccd0da;         /* surface0 */
+  color: #4c4f69;
+}
+
+#workspaces button:hover {
+  background: #bcc0cc;         /* surface1 */
   color: #4c4f69;
 }
 
