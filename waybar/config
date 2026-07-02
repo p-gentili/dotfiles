@@ -15,8 +15,11 @@
         "cpu",
         "memory",
         "temperature",
+        "backlight",
+        "pulseaudio",
         "network",
-        "battery"
+        "battery",
+        "tray"
     ],
     "clock": {
         "format": "{:%A %d %B - %H:%M}",
@@ -57,5 +60,23 @@
 		},
 		"format": "{capacity}% {icon}",
 		"format-icons": ["", "", "", "", ""]
+    },
+    "backlight": {
+        "format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", ""],
+        "on-scroll-up": "brightnessctl set 5%+",
+        "on-scroll-down": "brightnessctl set 5%-"
+    },
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": { "default": ["", "", ""] },
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+    },
+    "tray": {
+        "icon-size": 18,
+        "spacing": 10
     }
 }

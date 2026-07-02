@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+CMD="$1"
+
+if [[ "$CMD" == "toggle" ]]; then
+    # toggle mute
+    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+
+    # check new mute state
+    if wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q MUTED; then
+        notify-send -h string:x-canonical-private-synchronous:volume \
+            "Volume: Muted"
+    else
+        # unmuted → show current volume with bar
+        VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}')
+        notify-send -h int:value:"$VOL" \
+            -h string:x-canonical-private-synchronous:volume \
+            "Volume: ${VOL}%"
+    fi
+    exit 0
+fi
+
+# otherwise: volume change
+wpctl set-volume @DEFAULT_AUDIO_SINK@ "$CMD"
+
+# read new volume
+VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}')
+
+notify-send -h int:value:"$VOL" \
+    -h string:x-canonical-private-synchronous:volume \
+    "Volume: ${VOL}%"
+

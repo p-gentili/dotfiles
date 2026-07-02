@@ -1,0 +1,10 @@
+show=drun
+prompt=Search
+width=600
+height=400
+lines=8
+columns=1
+allow_images=true
+image_size=24
+insensitive=true
+gtk_dark=false

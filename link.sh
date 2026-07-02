@@ -38,3 +38,5 @@ ln -snf $(pwd)/waybar $HOME/.config/waybar
 ln -snf $(pwd)/zellij $HOME/.config/zellij
 ln -snf $(pwd)/kitty $HOME/.config/kitty
 ln -snf $(pwd)/mako $HOME/.config/mako
+ln -snf $(pwd)/wofi $HOME/.config/wofi
+ln -snf $(pwd)/swaylock $HOME/.config/swaylock

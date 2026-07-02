@@ -23,7 +23,7 @@ include /etc/sway/config-vars.d/*
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/Fuji_san_by_amaral.png fill
+output * bg /home/paolo.gentili@canonical.com/Pictures/Palette Wallpaper 5k 6.png fill
 #
 # Example configuration:
 #
@@ -47,6 +47,11 @@ bindswitch --reload lid:off output eDP-1 enable
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
+exec swayidle -w \
+    timeout 300 'swaylock -f' \
+    timeout 600 'swaymsg "output * dpms off"' \
+        resume 'swaymsg "output * dpms on"' \
+    before-sleep 'swaylock -f'
 
 ### Input configuration
 #
@@ -87,6 +92,9 @@ input "1267:12693:ELAN0676:00_04F3:3195_Touchpad" {
 
     # Kill focused window
     bindsym $mod+Shift+q kill
+
+    # Lock the screen
+    bindsym $mod+Escape exec swaylock -f
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -214,12 +222,28 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 #
-# Volume
+# Volume / Media
 #
-
-# bindsym XF86AudioPlay exec ~/.local/bin/vol-notify toggle
 bindsym XF86AudioRaiseVolume exec ~/.local/bin/vol-notify 5%+
 bindsym XF86AudioLowerVolume exec ~/.local/bin/vol-notify 5%-
+bindsym XF86AudioMute exec ~/.local/bin/vol-notify toggle
+bindsym XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+#
+# Brightness
+#
+bindsym XF86MonBrightnessUp exec ~/.local/bin/bright-notify 5%+
+bindsym XF86MonBrightnessDown exec ~/.local/bin/bright-notify 5%-
+
+#
+# Screenshots
+#
+bindsym Print exec ~/.local/bin/screenshot full
+bindsym Shift+Print exec ~/.local/bin/screenshot region
+bindsym $mod+Print exec ~/.local/bin/screenshot window
 
 
 # for_window [app_id="firefox"] border none
@@ -234,11 +258,21 @@ bar swaybar_command waybar
 #
 gaps inner 10
 smart_gaps off
-                            #border    #bg        # text
-# client.focused              #d65d0e    #fe8019    #282828
-client.focused              #d79921    #fabd2f    #282828
-client.focused_inactive     #3c3836    #a89984    #fbf1c7
-client.unfocused            #282828    #23302f    #fbf1c7
+# Catppuccin Latte palette
+set $base     #eff1f5
+set $mantle   #e6e9ef
+set $crust    #dce0e8
+set $surface0 #ccd0da
+set $text     #4c4f69
+set $subtext0 #6c6f85
+set $mauve    #8839ef
+set $red      #d20f39
+
+# class                 border    bg        text      indicator child_border
+client.focused          $mauve    $mauve    $crust    $mauve    $mauve
+client.focused_inactive $surface0 $surface0 $text     $surface0 $surface0
+client.unfocused        $mantle   $mantle   $subtext0 $mantle   $mantle
+client.urgent           $red      $red      $base     $red      $red
 
 exec mako
 include /etc/sway/config.d/*

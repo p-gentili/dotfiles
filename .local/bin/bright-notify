@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Usage: bright-notify 5%+ | 5%-
+CMD="$1"
+
+brightnessctl set "$CMD" >/dev/null
+
+# read new brightness as a percentage
+CUR=$(brightnessctl get)
+MAX=$(brightnessctl max)
+PCT=$(( CUR * 100 / MAX ))
+
+notify-send -h int:value:"$PCT" \
+    -h string:x-canonical-private-synchronous:brightness \
+    "Brightness: ${PCT}%"

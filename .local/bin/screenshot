@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Usage: screenshot [full|region|window]
+set -euo pipefail
+
+MODE="${1:-full}"
+DIR="$HOME/Pictures/Screenshots"
+mkdir -p "$DIR"
+FILE="$DIR/$(date +'%Y-%m-%d_%H-%M-%S').png"
+
+case "$MODE" in
+    region)
+        grim -g "$(slurp)" "$FILE"
+        ;;
+    window)
+        geom=$(swaymsg -t get_tree | python3 -c '
+import json, sys
+
+def walk(n):
+    if n.get("focused"):
+        r = n["rect"]
+        print("%d,%d %dx%d" % (r["x"], r["y"], r["width"], r["height"]))
+    for c in n.get("nodes", []) + n.get("floating_nodes", []):
+        walk(c)
+
+walk(json.load(sys.stdin))
+')
+        grim -g "$geom" "$FILE"
+        ;;
+    *)
+        grim "$FILE"
+        ;;
+esac
+
+wl-copy < "$FILE"
+notify-send "Screenshot saved" "$FILE"
