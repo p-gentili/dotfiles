@@ -1,0 +1,40 @@
+window {
+  margin: 0px;
+  background-color: transparent;   /* let the rounded box below show through */
+  font-family: "Noto Sans", sans-serif;
+  font-size: 14px;
+  color: #cdd6f4;                  /* text */
+}
+
+#outer-box {
+  margin: 0px;
+  padding: 8px;
+  background-color: #1e1e2e;        /* base */
+  border: 2px solid #cba6f7;        /* mauve */
+  border-radius: 12px;
+}
+
+#input {
+  margin: 4px;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  background-color: #181825;        /* mantle */
+  color: #cdd6f4;
+}
+
+#inner-box { margin: 4px; }
+
+#scroll { margin: 0px; }
+
+#entry {
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+
+#entry:selected {
+  background-color: #cba6f7;        /* mauve */
+  color: #1e1e2e;                   /* base */
+}
+
+#text:selected { color: #1e1e2e; }

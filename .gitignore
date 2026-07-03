@@ -2,3 +2,6 @@
 .vim/.netrwhist
 sway/theme.conf
 waybar/colors.css
+wofi/style.css
+swaylock/config
+mako/config
