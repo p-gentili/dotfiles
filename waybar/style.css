@@ -1,11 +1,13 @@
+@import "colors.css";
+
 * {
   font-family: "Noto Sans", "Symbols Nerd Font", sans-serif;
   font-size: 14px;
 }
 
 #waybar {
-    background-color: rgba(230, 233, 239, 0.85); /* mantle */
-    color: #4c4f69;                              /* text  */
+    background-color: alpha(@mantle, 0.85);
+    color: @text;
     border-radius: 12px;
 }
 
@@ -18,7 +20,7 @@
   margin: 0 3px;
   min-width: 24px;
   background: transparent;
-  color: #6c6f85;              /* subtext0 */
+  color: @subtext0;
   border: none;
   border-radius: 8px;
   transition: background 0.2s ease, color 0.2s ease;
@@ -26,25 +28,25 @@
 
 #workspaces button.focused,
 #workspaces button.active {
-  background: #8839ef;         /* mauve */
-  color: #eff1f5;              /* base  */
+  background: @mauve;
+  color: @base;
   font-weight: bold;
   border-radius: 8px;
 }
 
 #workspaces button.visible {
-  background: #ccd0da;         /* surface0 */
-  color: #4c4f69;
+  background: @surface0;
+  color: @text;
 }
 
 #workspaces button:hover {
-  background: #bcc0cc;         /* surface1 */
-  color: #4c4f69;
+  background: @surface1;
+  color: @text;
 }
 
 #workspaces button.urgent {
-  background: #d20f39;         /* red */
-  color: #eff1f5;
+  background: @red;
+  color: @base;
 }
 
 #clock,
@@ -54,11 +56,12 @@
 #backlight,
 #pulseaudio,
 #battery,
+#custom-theme,
 #tray {
   padding: 6px 12px;
-  color: #4c4f69;
+  color: @text;
 }
 
-#battery.warning { color: #fe640b; }   /* peach */
-#battery.critical { color: #d20f39; }  /* red   */
-#pulseaudio.muted { color: #9ca0b0; }  /* overlay0 */
+#battery.warning { color: @peach; }
+#battery.critical { color: @red; }
+#pulseaudio.muted { color: @overlay0; }

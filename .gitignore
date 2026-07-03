@@ -1,3 +1,4 @@
 .vim/plugged
 .vim/.netrwhist
 sway/theme.conf
+waybar/colors.css
