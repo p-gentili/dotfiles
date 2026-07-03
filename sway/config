@@ -258,21 +258,7 @@ bar swaybar_command waybar
 #
 gaps inner 10
 smart_gaps off
-# Catppuccin Latte palette
-set $base     #eff1f5
-set $mantle   #e6e9ef
-set $crust    #dce0e8
-set $surface0 #ccd0da
-set $text     #4c4f69
-set $subtext0 #6c6f85
-set $mauve    #8839ef
-set $red      #d20f39
-
-# class                 border    bg        text      indicator child_border
-client.focused          $mauve    $mauve    $crust    $mauve    $mauve
-client.focused_inactive $surface0 $surface0 $text     $surface0 $surface0
-client.unfocused        $mantle   $mantle   $subtext0 $mantle   $mantle
-client.urgent           $red      $red      $base     $red      $red
+include theme.conf
 
 exec mako
 exec_always nm-applet --indicator
