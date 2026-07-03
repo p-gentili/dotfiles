@@ -5,14 +5,14 @@ Personal config for a Sway (Wayland) desktop and terminal tooling.
 ## What's here
 
 - **sway/** — window manager config (Catppuccin Latte theme)
-- **waybar/** — status bar (workspaces, clock, system stats, tray, volume, backlight)
+- **waybar/** — status bar (workspaces, clock, system stats, tray, volume, backlight, theme toggle, power menu)
 - **mako/** — notifications
 - **wofi/** — application launcher (`$mod+d`)
-- **swaylock/** — lock screen
+- **swaylock/** — lock screen config (currently unused — see "Screen locking" below)
 - **kitty/**, **foot/** — terminals (follow the system light/dark preference)
 - **nvim/**, **vim/**, **helix/** — editors
 - **zsh/**, **.tmux.conf**, **zellij/**, **opencode/** — shell & tooling
-- **.local/bin/** — helper scripts (`vol-notify`, `bright-notify`, `screenshot`)
+- **.local/bin/** — helper scripts (`vol-notify`, `bright-notify`, `screenshot`, `power-actions`)
 
 ## Dependencies
 
@@ -56,7 +56,7 @@ This symlinks each config directory into `~/.config` and the scripts into
 | `$mod+d` | App launcher (wofi) |
 | `$mod+t` | File manager |
 | `$mod+Shift+q` | Kill focused window |
-| `$mod+Escape` | Lock screen |
+| `$mod+Escape` | Suspend |
 | `$mod+h/j/k/l` | Move focus |
 | `$mod+Shift+h/j/k/l` | Move window |
 | `$mod+1..0` | Switch workspace |
@@ -69,8 +69,18 @@ This symlinks each config directory into `~/.config` and the scripts into
 | Brightness keys | Adjust backlight (with OSD) |
 | Volume / mute / media keys | PipeWire volume + playerctl |
 | waybar ☀/☾ button | Toggle light (Latte) / dark (Mocha) — or run `theme-toggle` |
+| waybar ⏻ button | Power menu: shutdown / reboot / suspend (`power-actions`) |
 
-The screen auto-locks after 5 min idle and locks before sleep (swayidle).
+## Screen locking
+
+There is **no screen lock**. `$mod+Escape` (or the waybar ⏻ button → Suspend)
+suspends the machine; swayidle only blanks the displays after 10 min idle. The
+`swaylock/` config is kept but unused: [authd](https://github.com/canonical/authd)
+(the Google/Canonical SSO login broker) only lets **root** query its brokers, so
+GDM can unlock but a user-run locker like swaylock cannot — it can never
+authenticate the cloud account, so the screen would never unlock. To get a real
+lock back, bypass authd at the lock screen (e.g. `pam_fprintd` fingerprint or a
+separate `pam_pwdfile` password) and re-enable swaylock.
 
 ## Theme switching (Latte ⇄ Mocha)
 
