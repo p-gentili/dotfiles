@@ -19,7 +19,8 @@
         "backlight",
         "pulseaudio",
         "battery",
-        "tray"
+        "tray",
+        "custom/power"
     ],
     "clock": {
         "format": "{:%A %d %B - %H:%M}",
@@ -82,5 +83,12 @@
         "interval": 2,
         "on-click": "~/.local/bin/theme-toggle",
         "tooltip": false
+    },
+    "custom/power": {
+        "format": "{}",
+        "exec": "echo ",
+        "interval": "once",
+        "tooltip": false,
+        "on-click": "~/.local/bin/power-actions"
     }
 }
