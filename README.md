@@ -68,17 +68,27 @@ This symlinks each config directory into `~/.config` and the scripts into
 | `$mod+Print` | Screenshot (focused window) |
 | Brightness keys | Adjust backlight (with OSD) |
 | Volume / mute / media keys | PipeWire volume + playerctl |
+| waybar ☀/☾ button | Toggle light (Latte) / dark (Mocha) — or run `theme-toggle` |
 
 The screen auto-locks after 5 min idle and locks before sleep (swayidle).
 
-## Deferred: automatic day/night theming
+## Theme switching (Latte ⇄ Mocha)
 
-Currently the desktop uses **Catppuccin Latte (light)** only. The planned next
-step is automatic switching to **Catppuccin Mocha** after sunset:
+The desktop ships **Catppuccin Latte** (light) as the default and can flip to
+**Catppuccin Mocha** (dark) on demand. Click the **☀/☾ button** in waybar, or
+run `theme-toggle`. To force a mode: `theme-apply light` / `theme-apply dark`.
 
-- Install [`darkman`](https://darkman.whynothugo.nl/) (static Go binary →
-  `~/.local/bin`) and `geoclue-2.0`.
-- darkman computes local sunrise/sunset and sets the freedesktop `color-scheme`
-  preference — which **kitty and nvim already follow**.
-- Add darkman light/dark hook scripts that re-point each app's theme to a
-  Latte/Mocha variant and reload sway, waybar, mako, and wofi.
+How it works: the freedesktop `color-scheme` preference is the source of truth —
+**kitty and nvim follow it automatically**. `theme-apply` also repoints a
+gitignored per-app pointer symlink (`colors.css`, `theme.conf`, `style.css`,
+`config`) to the Latte or Mocha variant and reloads waybar, sway, and mako.
+`link.sh` seeds those pointers to Latte on a fresh checkout; git never tracks
+which mode is active, so `git status` stays clean either way.
+
+### Deferred: automatic day/night switching
+
+To later switch on sunset instead of by click, install
+[`darkman`](https://darkman.whynothugo.nl/) + `geoclue-2.0` and have it call
+`theme-apply dark` from `~/.local/share/dark-mode.d/` and `theme-apply light`
+from `~/.local/share/light-mode.d/`. No other change is needed — the manual
+toggle keeps working as an override.

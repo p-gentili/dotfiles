@@ -40,3 +40,10 @@ ln -snf $(pwd)/kitty $HOME/.config/kitty
 ln -snf $(pwd)/mako $HOME/.config/mako
 ln -snf $(pwd)/wofi $HOME/.config/wofi
 ln -snf $(pwd)/swaylock $HOME/.config/swaylock
+
+# Seed active-theme pointers (gitignored; theme-apply repoints them at runtime)
+ln -snf colors-latte.css $(pwd)/waybar/colors.css
+ln -snf theme-latte.conf $(pwd)/sway/theme.conf
+ln -snf style-latte.css  $(pwd)/wofi/style.css
+ln -snf config-latte     $(pwd)/swaylock/config
+ln -snf config-latte     $(pwd)/mako/config
