@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Apply a desktop color mode: light (Latte) or dark (Mocha).
+# Sets the XDG color-scheme, repoints per-app theme symlinks, reloads apps.
+set -euo pipefail
+
+mode="${1:-}"
+case "$mode" in
+  light) scheme="default";     variant="latte" ;;
+  dark)  scheme="prefer-dark"; variant="mocha" ;;
+  *) echo "usage: theme-apply <light|dark>" >&2; exit 1 ;;
+esac
+
+cfg="$HOME/.config"
+
+# 1. XDG color-scheme (kitty, nvim follow this automatically)
+gsettings set org.gnome.desktop.interface color-scheme "$scheme"
+
+# 2. Repoint per-app theme symlinks
+ln -snf "colors-${variant}.css" "$cfg/waybar/colors.css"
+ln -snf "theme-${variant}.conf" "$cfg/sway/theme.conf"
+ln -snf "style-${variant}.css"  "$cfg/wofi/style.css"
+ln -snf "config-${variant}"     "$cfg/swaylock/config"
+ln -snf "config-${variant}"     "$cfg/mako/config"
+
+# 3. Reload running apps (best-effort; ignore if not running)
+pkill -SIGUSR2 waybar    || true
+swaymsg reload           || true
+makoctl reload           || true
