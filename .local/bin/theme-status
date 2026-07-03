@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+current=$(gsettings get org.gnome.desktop.interface color-scheme)
+case "$current" in
+  *prefer-dark*) echo "☾" ;;
+  *)             echo "☀" ;;
+esac

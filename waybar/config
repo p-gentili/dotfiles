@@ -12,6 +12,7 @@
         "clock"
     ],
     "modules-right": [
+        "custom/theme",
         "cpu",
         "memory",
         "temperature",
@@ -74,5 +75,12 @@
     "tray": {
         "icon-size": 18,
         "spacing": 10
+    },
+    "custom/theme": {
+        "format": "{}",
+        "exec": "~/.local/bin/theme-status",
+        "interval": 2,
+        "on-click": "~/.local/bin/theme-toggle",
+        "tooltip": false
     }
 }
