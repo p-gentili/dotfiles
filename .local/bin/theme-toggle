@@ -2,8 +2,10 @@
 # Flip the desktop between light and dark based on the current XDG scheme.
 set -euo pipefail
 
+here=$(dirname "$(readlink -f "$0")")
+
 current=$(gsettings get org.gnome.desktop.interface color-scheme)
 case "$current" in
-  *prefer-dark*) exec theme-apply light ;;
-  *)             exec theme-apply dark  ;;
+  *prefer-dark*) exec "$here/theme-apply" light ;;
+  *)             exec "$here/theme-apply" dark  ;;
 esac
