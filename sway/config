@@ -265,4 +265,16 @@ exec mako
 exec_always nm-applet --indicator
 # MX Ergo horizontal wheel tilt -> workspace switching (mouse-only; touchpad uses swipe gesture)
 exec ~/.local/bin/wheel-workspace
+
+#
+# Clipboard
+#
+# Keep clipboard contents alive after the source window closes.
+exec wl-clip-persist --clipboard regular
+# Record clipboard history (text + images) into cliphist.
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type image --watch cliphist store
+# Pick from history via wofi and copy the selection back.
+bindsym $mod+c exec cliphist list | wofi --dmenu | cliphist decode | wl-copy
+
 include /etc/sway/config.d/*

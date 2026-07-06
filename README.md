@@ -22,7 +22,14 @@ Install before running `link.sh`:
 sudo apt install -y \
     sway waybar mako-notifier wofi \
     swaylock swayidle grim slurp brightnessctl playerctl \
-    wl-clipboard
+    wl-clipboard cliphist python3-evdev
+```
+
+`wl-clip-persist` isn't packaged for Ubuntu or published on crates.io; install
+it from its GitHub repo (needs a Rust toolchain):
+
+```bash
+cargo install --git https://github.com/Linus789/wl-clip-persist.git
 ```
 
 Waybar uses Nerd Font icon glyphs. Ubuntu's `fonts-font-awesome` is Font
@@ -55,6 +62,7 @@ This symlinks each config directory into `~/.config` and the scripts into
 | `$mod+Return` | Terminal (kitty) |
 | `$mod+d` | App launcher (wofi) |
 | `$mod+t` | File manager |
+| `$mod+c` | Clipboard history picker (cliphist + wofi) |
 | `$mod+Shift+q` | Kill focused window |
 | `$mod+Escape` | Suspend |
 | `$mod+h/j/k/l` | Move focus |
@@ -93,6 +101,14 @@ in the `input` group):
 sudo apt install -y python3-evdev
 sudo usermod -aG input "$USER"   # then log out / back in
 ```
+
+## Clipboard
+
+`cliphist` records clipboard history (text and images) via two
+`wl-paste --watch` recorders, and `wl-clip-persist` keeps the clipboard alive
+after the source window closes (otherwise wlroots drops it). Press **`$mod+c`**
+to fan the history through `wofi` and copy the chosen entry back. Wipe history
+with `cliphist wipe`.
 
 ## Screen locking
 
