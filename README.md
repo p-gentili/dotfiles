@@ -12,7 +12,7 @@ Personal config for a Sway (Wayland) desktop and terminal tooling.
 - **kitty/**, **foot/** — terminals (follow the system light/dark preference)
 - **nvim/**, **vim/**, **helix/** — editors
 - **zsh/**, **.tmux.conf**, **zellij/**, **opencode/** — shell & tooling
-- **.local/bin/** — helper scripts (`vol-notify`, `bright-notify`, `screenshot`, `power-actions`)
+- **.local/bin/** — helper scripts (`vol-notify`, `bright-notify`, `screenshot`, `power-actions`, `wheel-workspace`)
 
 ## Dependencies
 
@@ -61,6 +61,8 @@ This symlinks each config directory into `~/.config` and the scripts into
 | `$mod+Shift+h/j/k/l` | Move window |
 | `$mod+1..0` | Switch workspace |
 | `$mod+Shift+1..0` | Move window to workspace |
+| Three-finger swipe left/right | Switch workspace (touchpad, `bindgesture`) |
+| MX Ergo horizontal wheel tilt | Switch workspace (mouse only, `wheel-workspace`) |
 | `$mod+f` | Fullscreen |
 | `$mod+r` | Resize mode |
 | `Print` | Screenshot (full → file + clipboard) |
@@ -70,6 +72,27 @@ This symlinks each config directory into `~/.config` and the scripts into
 | Volume / mute / media keys | PipeWire volume + playerctl |
 | waybar ☀/☾ button | Toggle light (Latte) / dark (Mocha) — or run `theme-toggle` |
 | waybar ⏻ button | Power menu: shutdown / reboot / suspend (`power-actions`) |
+
+## Workspace switching by scroll (mouse vs touchpad)
+
+Two independent mechanisms, deliberately split by device:
+
+- **Touchpad** — a three-finger swipe (`bindgesture swipe:3` in `sway/config`).
+- **MX Ergo trackball** — tilting the horizontal wheel, handled by the
+  `wheel-workspace` script (`exec`'d from `sway/config`).
+
+Why the script instead of one `bindsym button6/button7`? Sway bindings are
+global and can't be scoped to a single device, so binding horizontal scroll
+there also fired on the touchpad's two-finger drift. `wheel-workspace` reads
+evdev directly and watches **only** the trackball (matched by name +
+`REL_HWHEEL`), translating each tilt into `swaymsg workspace next/prev`. It
+needs `python3-evdev` and read access to `/dev/input/event*` (i.e. membership
+in the `input` group):
+
+```bash
+sudo apt install -y python3-evdev
+sudo usermod -aG input "$USER"   # then log out / back in
+```
 
 ## Screen locking
 
