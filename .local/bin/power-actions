@@ -2,6 +2,10 @@
 # Session power actions via a wofi menu: shutdown, reboot, suspend.
 set -euo pipefail
 
+# Toggle: a second click (or a click while any wofi menu is open) closes it
+# instead of stacking another instance on top.
+if pkill -x wofi; then exit 0; fi
+
 choice=$(printf '%s\n' "  Shutdown" "  Reboot" "  Suspend" \
     | wofi --dmenu --prompt "Power" \
            --width 200 --height 160 \

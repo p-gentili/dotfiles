@@ -2,6 +2,10 @@
 # Pick a power profile via a wofi menu.
 set -euo pipefail
 
+# Toggle: a second click (or a click while any wofi menu is open) closes it
+# instead of stacking another instance on top.
+if pkill -x wofi; then exit 0; fi
+
 current=$(powerprofilesctl get)
 choice=$(powerprofilesctl list | grep -Eo '(performance|balanced|power-saver)' | sort -u \
     | wofi --dmenu --prompt "Power [$current]" \
