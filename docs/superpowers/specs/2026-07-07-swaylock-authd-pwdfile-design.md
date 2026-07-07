@@ -44,15 +44,16 @@ Rejected alternatives:
 ### 1. System (outside the repo — documented, not tracked)
 
 - Install `libpam-pwdfile` (`sudo apt install -y libpam-pwdfile`).
-- Create the secret file, owned by the user, mode `600`:
-  `~/.config/swaylock/passwd` containing `paolo.gentili@canonical.com:<hash>`
-  where `<hash>` is generated with e.g. `openssl passwd -6` (or `mkpasswd`).
-- Replace `/etc/pam.d/swaylock` with:
+- Create the secret file, owned by the user, mode `600`, at
+  `$HOME/.config/swaylock/passwd` containing one line `$USER:<hash>`, where
+  `<hash>` is generated with `mkpasswd -m sha-512` (or `openssl passwd -6`).
+- Replace `/etc/pam.d/swaylock` with (absolute path baked in — PAM does not
+  expand `~`/`$HOME`, so write it via an unquoted heredoc on `$HOME`):
   ```
-  auth required pam_pwdfile.so pwdfile /home/paolo.gentili@canonical.com/.config/swaylock/passwd
+  auth required pam_pwdfile.so pwdfile $HOME/.config/swaylock/passwd
   auth required pam_permit.so
   ```
-  (pam_pwdfile needs an absolute path; `~` is not expanded by PAM.)
+  See the README "Screen locking" section for the exact copy-paste commands.
 
 > **Caveat:** `/etc/pam.d/swaylock` is package-owned; a future `swaylock`
 > package upgrade may prompt to overwrite it (dpkg conffile handling). The exact
@@ -60,9 +61,10 @@ Rejected alternatives:
 
 > **Note on the secret file:** `~/.config/swaylock/passwd` is a plaintext hash
 > file and MUST NOT be tracked by git. It is a runtime secret, created by hand.
-> The `.gitignore` already ignores `swaylock/config`; the `passwd` file lives in
-> `~/.config/swaylock/` (the symlinked dir), so add an ignore rule / never
-> `git add` it. It is not part of the repo checkout.
+> Because `link.sh` symlinks `~/.config/swaylock` → the repo's `swaylock/` dir,
+> the file physically lands at `swaylock/passwd` in the working tree, so it is
+> gitignored (added alongside the existing `swaylock/config` rule). Never
+> `git add -f` it.
 
 ### 2. Repo — `sway/config`
 
