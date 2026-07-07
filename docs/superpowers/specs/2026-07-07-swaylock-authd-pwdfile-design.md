@@ -5,8 +5,8 @@
 
 ## Problem
 
-The machine logs in as an **authd-managed user** (`paolo.gentili@canonical.com`,
-UID 1301776094, served via NSS, no local `/etc/passwd`/`/etc/shadow` password).
+The machine logs in as an **authd-managed user** (a high-UID SSO account served
+via NSS, with no local `/etc/passwd`/`/etc/shadow` password).
 authd's PAM module (`pam_authd_exec.so`, pulled into `swaylock` today via
 `/etc/pam.d/swaylock` → `include login` → `@include common-auth`) launches
 authd's **interactive** client (`/usr/libexec/authd-pam`), which needs a rich

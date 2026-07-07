@@ -8,7 +8,7 @@ Personal config for a Sway (Wayland) desktop and terminal tooling.
 - **waybar/** — status bar (workspaces, clock, system stats, tray, volume, backlight, theme toggle, power menu)
 - **mako/** — notifications
 - **wofi/** — application launcher (`$mod+d`)
-- **swaylock/** — lock screen config (currently unused — see "Screen locking" below)
+- **swaylock/** — lock screen (`$mod+Escape` / idle / before-sleep — see "Screen locking" below)
 - **kitty/**, **foot/** — terminals (follow the system light/dark preference)
 - **nvim/**, **vim/**, **helix/** — editors
 - **zsh/**, **.tmux.conf**, **zellij/**, **opencode/** — shell & tooling
@@ -21,7 +21,7 @@ Install before running `link.sh`:
 ```bash
 sudo apt install -y \
     sway waybar mako-notifier wofi \
-    swaylock swayidle grim slurp brightnessctl playerctl \
+    swaylock swayidle libpam-pwdfile grim slurp brightnessctl playerctl \
     wl-clipboard cliphist python3-evdev
 ```
 
@@ -112,14 +112,44 @@ with `cliphist wipe`.
 
 ## Screen locking
 
-There is **no screen lock**. `$mod+Escape` (or the waybar ⏻ button → Suspend)
-suspends the machine; swayidle only blanks the displays after 10 min idle. The
-`swaylock/` config is kept but unused: [authd](https://github.com/canonical/authd)
-(the Google/Canonical SSO login broker) only lets **root** query its brokers, so
-GDM can unlock but a user-run locker like swaylock cannot — it can never
-authenticate the cloud account, so the screen would never unlock. To get a real
-lock back, bypass authd at the lock screen (e.g. `pam_fprintd` fingerprint or a
-separate `pam_pwdfile` password) and re-enable swaylock.
+swaylock locks the screen: **`$mod+Escape`** locks manually, swayidle locks
+after 10 min idle (then blanks the displays), and any suspend locks on resume
+(`before-sleep`). Suspend now lives on the waybar **⏻ button → Suspend**.
+
+Why it needs a dedicated PAM stack: this box logs in as an
+[authd](https://github.com/canonical/authd)-managed user (Google/Canonical SSO).
+authd authenticates through an **interactive** PAM client (broker menus, device
+codes) that only a rich greeter like GDM can drive — swaylock's single password
+field can't, so with the default PAM config swaylock locks but never unlocks. So
+swaylock is given its own auth path that ignores authd and checks a self-managed
+password via `pam_pwdfile`. This is fully isolated — GDM, TTY login and the
+authd stack are untouched.
+
+Setup (all outside this repo, do once per machine):
+
+```bash
+sudo apt install -y libpam-pwdfile
+
+PWFILE="$HOME/.config/swaylock/passwd"
+
+# create the unlock-password hash (prompts twice, no echo)
+mkdir -p "$(dirname "$PWFILE")"
+umask 077
+printf '%s:%s\n' "$USER" "$(mkpasswd -m sha-512)" > "$PWFILE"
+chmod 600 "$PWFILE"
+
+# point swaylock's PAM at it (PAM does not expand ~/$HOME — the absolute path
+# is baked in here at write time by the unquoted heredoc)
+sudo tee /etc/pam.d/swaylock >/dev/null <<EOF
+auth required pam_pwdfile.so pwdfile $PWFILE
+auth required pam_permit.so
+EOF
+```
+
+`$PWFILE` (`~/.config/swaylock/passwd`) is a plaintext hash and a runtime
+secret — never commit it. `/etc/pam.d/swaylock` is package-owned, so a
+`swaylock` upgrade may prompt to overwrite it; re-run the `tee` block above to
+restore it. Change the password later by re-running the `mkpasswd` line.
 
 ## Theme switching (Latte ⇄ Mocha)
 

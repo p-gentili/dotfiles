@@ -5,4 +5,5 @@ sway/theme.conf
 waybar/colors.css
 wofi/style.css
 swaylock/config
+swaylock/passwd
 mako/config
