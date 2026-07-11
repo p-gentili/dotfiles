@@ -48,10 +48,10 @@ bindswitch --reload lid:off output eDP-1 enable
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
 exec swayidle -w \
-    timeout 600 'swaylock -f' \
-    timeout 900 'swaymsg "output * dpms off"' \
+    timeout 5 'pgrep -x swaylock >/dev/null && swaymsg "output * dpms off"' \
         resume 'swaymsg "output * dpms on"' \
-    before-sleep 'swaylock -f'
+    timeout 600 '~/.local/bin/lock' \
+    before-sleep 'swaylock -f -C ~/.config/swaylock/config-mocha'
 
 ### Input configuration
 #
@@ -93,8 +93,9 @@ input "1267:12693:ELAN0676:00_04F3:3195_Touchpad" {
     # Kill focused window
     bindsym $mod+Shift+q kill
 
-    # Lock the screen (suspend is available from the waybar power button)
-    bindsym $mod+Escape exec swaylock -f
+    # Lock the screen and blank the monitor immediately (see ~/.local/bin/lock).
+    # Suspend is available from the waybar power button.
+    bindsym $mod+Escape exec ~/.local/bin/lock
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
