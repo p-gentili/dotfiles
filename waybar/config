@@ -77,7 +77,7 @@
     },
     "tray": {
         "icon-size": 18,
-        "spacing": 10
+        "spacing": 16
     },
     "custom/theme": {
         "format": "{}",

@@ -8,7 +8,6 @@
 #waybar {
     background-color: alpha(@mantle, 0.85);
     color: @text;
-    border-radius: 12px;
 }
 
 #workspaces {
