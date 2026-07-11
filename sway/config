@@ -252,6 +252,9 @@ bindsym $mod+Print exec ~/.local/bin/screenshot window
 
 # for_window [app_id="firefox"] border none
 
+# Proton Authenticator: float, size compact, and center on open
+for_window [app_id="proton-authenticator"] floating enable, resize set 450 720, move position center
+
 #
 # Status Bar:
 #
