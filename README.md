@@ -12,7 +12,7 @@ Personal config for a Sway (Wayland) desktop and terminal tooling.
 - **kitty/**, **foot/** — terminals (follow the system light/dark preference)
 - **nvim/**, **vim/**, **helix/** — editors
 - **zsh/**, **.tmux.conf**, **zellij/**, **opencode/** — shell & tooling
-- **.local/bin/** — helper scripts (`vol-notify`, `bright-notify`, `screenshot`, `power-actions`, `wheel-workspace`)
+- **.local/bin/** — helper scripts (`vol-notify`, `bright-notify`, `screenshot`, `scratchterm`, `power-actions`, `wheel-workspace`)
 
 ## Dependencies
 
@@ -60,6 +60,7 @@ This symlinks each config directory into `~/.config` and the scripts into
 | Keys | Action |
 |------|--------|
 | `$mod+Return` | Terminal (kitty) |
+| `$mod+Shift+Return` | Floating scratch terminal (see below) |
 | `$mod+d` | App launcher (wofi) |
 | `$mod+t` | File manager |
 | `$mod+c` | Clipboard history picker (cliphist + wofi) |
@@ -101,6 +102,21 @@ in the `input` group):
 sudo apt install -y python3-evdev
 sudo usermod -aG input "$USER"   # then log out / back in
 ```
+
+## Floating windows & the scratch terminal
+
+A few apps open floating and centered instead of tiled, via `for_window` rules
+in `sway/config`: **Proton Authenticator**, the **Bitwarden** browser pop-out
+(matched by its Firefox window title), and the **scratch terminal**.
+
+**`$mod+Shift+Return`** launches a floating scratch terminal for quick commands
+— a dark-tinted kitty (`#17251C`) that always opens centered. It runs through
+`~/.local/bin/scratchterm`, which points `KITTY_CONFIG_DIRECTORY` at
+`kitty/scratch/`. That dir deliberately has **no `*.auto.conf`** files, so
+kitty's light/dark theme auto-switcher never runs for it and the fixed dark
+background sticks — while the main terminals keep following the system
+preference. The wrapper script exists because sway blanks `$HOME` when expanding
+a `bindsym exec` line, so the config-dir path must be resolved by a real shell.
 
 ## Clipboard
 
