@@ -255,6 +255,9 @@ bindsym $mod+Print exec ~/.local/bin/screenshot window
 # Proton Authenticator: float, size compact, and center on open
 for_window [app_id="proton-authenticator"] floating enable, resize set 450 720, move position center
 
+# Bitwarden extension pop-out (Firefox): float, size compact, and center on open
+for_window [app_id="firefox_firefox" title="^Extension: \(Bitwarden Password Manager\)"] floating enable, resize set 450 720, move position center
+
 #
 # Status Bar:
 #
