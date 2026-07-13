@@ -1,0 +1,155 @@
+#!/usr/bin/env python3
+"""Pin a group of floating windows to the top-right corner of their workspace,
+laid out as a right-anchored horizontal row of whichever members are open:
+
+  - one open  -> it sits in the top-right corner
+  - two+ open  -> side by side, first-listed at the corner and the rest to its
+                  left, so opening a second app aligns them horizontally
+                  instead of overlapping.
+
+Positions against the *workspace* rect (which sway shrinks to exclude waybar and
+the outer gap), so it stays correct on any output/resolution.
+
+Usage:
+  float-top-right [--watch] <right_margin> <gap> <top_margin> <SPEC>...
+  SPEC = <app_id|class>:<value>:<width>:<height>
+         key is `app_id` (native Wayland) or `class` (XWayland, e.g. ZapZap)
+
+Without --watch it lays the group out once and exits.
+
+With --watch it lays out once, then re-runs whenever a member opens or closes
+(sway fires `for_window` only on open, so the watcher is what returns the
+survivor to the corner when the other closes). Start exactly one via
+`exec_always`; each start replaces any previous instance.
+"""
+import json
+import os
+import signal
+import subprocess
+import sys
+import time
+
+
+def swaymsg(*args):
+    return subprocess.run(["swaymsg", *args], capture_output=True, text=True)
+
+
+def parse_specs(items):
+    specs = []
+    for item in items:
+        key, val, width, height = item.split(":")
+        specs.append((key, val, int(width), int(height)))
+    return specs
+
+
+def find_open(specs):
+    """Return {spec_index: (key, val, w, h, workspace_rect)} for open members."""
+    tree = json.loads(swaymsg("-t", "get_tree").stdout)
+    found = {}
+
+    def walk(node, ws=None):
+        if node.get("type") == "workspace":
+            ws = node
+        for i, (key, val, w, h) in enumerate(specs):
+            if i in found:
+                continue
+            props = node.get("window_properties") or {}
+            got = props.get("class") if key == "class" else node.get(key)
+            if got == val and ws is not None:
+                found[i] = (key, val, w, h, ws["rect"])
+        for child in node.get("nodes", []) + node.get("floating_nodes", []):
+            walk(child, ws)
+
+    walk(tree)
+    return found
+
+
+def layout(specs, rmargin, gap, tmargin, retries=6):
+    for _ in range(retries):
+        members = find_open(specs)
+        if members:
+            ref = members[min(members)][4]  # usable rect of the first open member
+            cursor = ref["x"] + ref["width"] - rmargin  # right edge of rightmost
+            for i in sorted(members):
+                key, val, w, h, _ = members[i]
+                x, y = cursor - w, ref["y"] + tmargin
+                swaymsg(f'[{key}="{val}"] resize set {w} {h}, move position {x} {y}')
+                cursor = x - gap
+            return
+        time.sleep(0.15)
+
+
+def watch(specs, rmargin, gap, tmargin):
+    values = {val for _, val, _, _ in specs}
+    layout(specs, rmargin, gap, tmargin)  # place whatever is already open
+
+    proc = subprocess.Popen(
+        ["swaymsg", "-m", "-t", "subscribe", '["window"]'],
+        stdout=subprocess.PIPE, text=True,
+    )
+
+    def cleanup(*_):
+        proc.terminate()
+        sys.exit(0)
+
+    signal.signal(signal.SIGTERM, cleanup)
+    signal.signal(signal.SIGINT, cleanup)
+
+    decoder = json.JSONDecoder()
+    buffer = ""
+    for line in proc.stdout:
+        buffer += line
+        while buffer.strip():
+            buffer = buffer.lstrip()
+            try:
+                event, end = decoder.raw_decode(buffer)
+            except json.JSONDecodeError:
+                break
+            buffer = buffer[end:]
+            if event.get("change") not in ("new", "close"):
+                continue
+            con = event.get("container") or {}
+            props = con.get("window_properties") or {}
+            if con.get("app_id") in values or props.get("class") in values:
+                # window just settled on "new"; already gone on "close"
+                layout(specs, rmargin, gap, tmargin,
+                       retries=6 if event["change"] == "new" else 1)
+
+
+def take_singleton():
+    """Ensure a single --watch instance across sway reloads, via a pidfile.
+
+    Only ever signals a pid we ourselves recorded (a real prior watcher) — not
+    anything that merely mentions this script on its command line.
+    """
+    runtime = os.environ.get("XDG_RUNTIME_DIR", "/tmp")
+    pidfile = os.path.join(runtime, "float-top-right-watch.pid")
+    try:
+        old = int(open(pidfile).read().strip())
+    except (FileNotFoundError, ValueError):
+        old = None
+    if old and old != os.getpid():
+        try:
+            os.kill(old, signal.SIGTERM)
+        except ProcessLookupError:
+            pass
+    with open(pidfile, "w") as handle:
+        handle.write(str(os.getpid()))
+
+
+def main():
+    args = sys.argv[1:]
+    watch_mode = bool(args) and args[0] == "--watch"
+    if watch_mode:
+        args = args[1:]
+    rmargin, gap, tmargin = int(args[0]), int(args[1]), int(args[2])
+    specs = parse_specs(args[3:])
+    if watch_mode:
+        take_singleton()
+        watch(specs, rmargin, gap, tmargin)
+    else:
+        layout(specs, rmargin, gap, tmargin)
+
+
+if __name__ == "__main__":
+    main()
