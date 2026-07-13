@@ -1,0 +1,9 @@
+#!/bin/sh
+# Floating scratch terminal for quick commands.
+#
+# Launches kitty with a dedicated config directory (kitty/scratch) that has no
+# OS light/dark *.auto.conf theme files, so its distinct green background sticks
+# instead of being overridden by the theme auto-switcher. Wrapping this in a
+# script (rather than inlining in the sway binding) keeps $HOME expansion in the
+# shell, where it works — sway blanks $HOME when expanding a bindsym exec line.
+exec env KITTY_CONFIG_DIRECTORY="$HOME/.config/kitty/scratch" kitty --class scratchterm "$@"

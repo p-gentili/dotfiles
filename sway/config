@@ -87,6 +87,8 @@ input "1267:12693:ELAN0676:00_04F3:3195_Touchpad" {
 #
     # Start basic apps
     bindsym $mod+Return exec $term
+    # Floating scratch terminal for quick commands (green-tinted, centered)
+    bindsym $mod+Shift+Return exec ~/.local/bin/scratchterm
     bindsym $mod+d exec $menu
     bindsym $mod+t exec $filemanager
 
@@ -257,6 +259,9 @@ for_window [app_id="proton-authenticator"] floating enable, resize set 450 720, 
 
 # Bitwarden extension pop-out (Firefox): float, size compact, and center on open
 for_window [app_id="firefox_firefox" title="^Extension: \(Bitwarden Password Manager\)"] floating enable, resize set 450 720, move position center
+
+# Scratch terminal: float, size roomy, and center on open
+for_window [app_id="scratchterm"] floating enable, resize set 900 550, move position center
 
 #
 # Status Bar:
