@@ -263,6 +263,16 @@ for_window [app_id="firefox_firefox" title="^Extension: \(Bitwarden Password Man
 # Scratch terminal: float, size roomy, and center on open
 for_window [app_id="scratchterm"] floating enable, resize set 900 550, move position center
 
+# Google Meet companion window (Chromium spawns it when the call tab loses
+# focus): float, keep on all workspaces so it stays visible mid-call, and pin to
+# the bottom-left corner on open. The companion is titled "Meet - <code>" with no
+# suffix; ordinary browser windows always end in "- Chromium" (including one
+# whose active tab is the call, "Meet - <code> - Chromium"), so the trailing
+# negative lookbehind matches the companion only and never floats the browser.
+# float-corner positions against the workspace rect, so it stays correct on any
+# output/resolution.
+for_window [app_id="chromium" title="^Meet - .*(?<!- Chromium)$"] floating enable, sticky enable, exec ~/.local/bin/float-corner bottom-left 13 chromium "^Meet - .*(?<!- Chromium)\$"
+
 # Signal + ZapZap: float, keep on all workspaces (sticky), and pin to the
 # top-right corner as a right-anchored horizontal row — one open sits in the
 # corner; both open line up side by side (Signal at the corner, ZapZap to its

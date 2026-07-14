@@ -1,0 +1,77 @@
+#!/usr/bin/env python3
+"""Pin one floating window to a corner of its workspace.
+
+Positions against the *workspace* rect (which sway shrinks to exclude waybar and
+the outer gap) using the window's current size, so it lands correctly on any
+output/resolution. Single-shot: run it from a `for_window` rule; combine with
+`sticky enable` if the window should stay pinned across workspaces.
+
+Usage:
+  float-corner <corner> <gap> <app_id> [title_regex]
+    corner = top-left | top-right | bottom-left | bottom-right
+"""
+import json
+import re
+import subprocess
+import sys
+import time
+
+
+def swaymsg(*args):
+    return subprocess.run(["swaymsg", *args], capture_output=True, text=True)
+
+
+def find_window(app_id, title_re):
+    tree = json.loads(swaymsg("-t", "get_tree").stdout)
+    match = None
+
+    def walk(node, ws=None):
+        nonlocal match
+        if node.get("type") == "workspace":
+            ws = node
+        name = node.get("name") or ""
+        if (node.get("app_id") == app_id and ws is not None
+                and node.get("type") == "floating_con"
+                and (title_re is None or title_re.search(name))):
+            match = (node["rect"], ws["rect"], node["id"])
+        for child in node.get("nodes", []) + node.get("floating_nodes", []):
+            walk(child, ws)
+
+    walk(tree)
+    return match
+
+
+def place(corner, gap, app_id, title_re, retries=8):
+    for _ in range(retries):
+        found = find_window(app_id, title_re)
+        # wait until the window is floating and has settled to a real size
+        if found and found[0]["width"] > 1 and found[0]["height"] > 1:
+            win, ws, con_id = found
+            left = "left" in corner
+            top = "top" in corner
+            # desired top-left of the *content* rect
+            tx = ws["x"] + (gap if left else ws["width"] - win["width"] - gap)
+            ty = ws["y"] + (gap if top else ws["height"] - win["height"] - gap)
+            # `move position` places the window frame (title bar/borders), which
+            # the tree reports separately from the content rect. Move once, see
+            # where the content landed, then correct by the delta so the content
+            # sits exactly at the target regardless of decoration size.
+            swaymsg(f'[con_id={con_id}] move position {tx} {ty}')
+            after = find_window(app_id, title_re)
+            if after:
+                ax, ay = after[0]["x"], after[0]["y"]
+                swaymsg(f'[con_id={con_id}] move position '
+                        f'{2 * tx - ax} {2 * ty - ay}')
+            return
+        time.sleep(0.15)
+
+
+def main():
+    args = sys.argv[1:]
+    corner, gap, app_id = args[0], int(args[1]), args[2]
+    title_re = re.compile(args[3]) if len(args) > 3 else None
+    place(corner, gap, app_id, title_re)
+
+
+if __name__ == "__main__":
+    main()
