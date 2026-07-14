@@ -20,6 +20,7 @@
         "pulseaudio",
         "battery",
         "tray",
+        "custom/whatsapp",
         "custom/power"
     ],
     "clock": {
@@ -85,6 +86,12 @@
         "interval": 2,
         "on-click": "~/.local/bin/theme-toggle",
         "tooltip": false
+    },
+    "custom/whatsapp": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "~/.local/bin/whatsapp-toggle",
+        "on-click-middle": "~/.local/bin/whatsapp-toggle quit"
     },
     "custom/power": {
         "format": "{}",

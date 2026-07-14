@@ -57,9 +57,19 @@
 #battery,
 #custom-theme,
 #custom-power,
+#custom-whatsapp,
 #tray {
   padding: 6px 12px;
   color: @text;
+}
+
+#custom-whatsapp {
+  color: @green;
+  font-size: 18px;
+}
+
+#custom-whatsapp:hover {
+  color: @teal;
 }
 
 #custom-power {

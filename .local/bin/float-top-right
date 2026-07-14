@@ -92,8 +92,14 @@ def watch(specs, rmargin, gap, tmargin):
         proc.terminate()
         sys.exit(0)
 
+    def relayout(*_):
+        # On-demand re-pin (e.g. after whatsapp-toggle restores a member from
+        # the scratchpad, which sway reports as `move`, not `new`/`close`).
+        layout(specs, rmargin, gap, tmargin)
+
     signal.signal(signal.SIGTERM, cleanup)
     signal.signal(signal.SIGINT, cleanup)
+    signal.signal(signal.SIGUSR1, relayout)
 
     decoder = json.JSONDecoder()
     buffer = ""

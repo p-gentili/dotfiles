@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+"""Toggle the WhatsApp Web PWA from waybar.
+
+  whatsapp-toggle        launch if not running; hide (-> scratchpad) if visible;
+                         show + re-pin if hidden.
+  whatsapp-toggle quit   close the PWA window, whether visible or hidden.
+
+Hiding uses sway's scratchpad rather than quitting, so the process keeps running
+and notifications keep arriving; showing is instant. Showing emits a sway `move`
+event, which the float-top-right watcher ignores (it only reflows on new/close),
+so we signal that watcher (SIGUSR1 via its pidfile) to re-pin WhatsApp into the
+top-right row. Launching needs no signal: the fresh window fires `new`, which the
+watcher already handles.
+"""
+import json
+import os
+import signal
+import subprocess
+import sys
+
+APP_ID = "chrome-hnpfjngllnobngcgfapefoaidbinmjnm-Default"
+LAUNCH = ["/snap/bin/chromium", "--profile-directory=Default",
+          "--app-id=hnpfjngllnobngcgfapefoaidbinmjnm"]
+SEL = f'[app_id="{APP_ID}"]'
+
+
+def swaymsg(*args):
+    return subprocess.run(["swaymsg", *args], capture_output=True, text=True)
+
+
+def find_state():
+    """Return 'absent', 'hidden' (in scratchpad), or 'visible'."""
+    tree = json.loads(swaymsg("-t", "get_tree").stdout)
+    state = "absent"
+
+    def walk(node, ws=None):
+        nonlocal state
+        if node.get("type") == "workspace":
+            ws = node.get("name")
+        if node.get("app_id") == APP_ID:
+            state = "hidden" if ws == "__i3_scratch" else "visible"
+        for child in node.get("nodes", []) + node.get("floating_nodes", []):
+            walk(child, ws)
+
+    walk(tree)
+    return state
+
+
+def signal_watcher():
+    """Ask the running float-top-right watcher to re-pin the row."""
+    runtime = os.environ.get("XDG_RUNTIME_DIR", "/tmp")
+    pidfile = os.path.join(runtime, "float-top-right-watch.pid")
+    try:
+        pid = int(open(pidfile).read().strip())
+        os.kill(pid, signal.SIGUSR1)
+    except (FileNotFoundError, ValueError, ProcessLookupError):
+        pass
+
+
+def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "quit":
+        swaymsg(f"{SEL} kill")
+        return
+
+    state = find_state()
+    if state == "absent":
+        subprocess.Popen(LAUNCH, start_new_session=True)
+    elif state == "visible":
+        swaymsg(f"{SEL} move scratchpad")
+    else:  # hidden
+        swaymsg(f"{SEL} scratchpad show, floating enable, sticky enable")
+        signal_watcher()
+
+
+if __name__ == "__main__":
+    main()
