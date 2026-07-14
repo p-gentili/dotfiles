@@ -285,7 +285,7 @@ for_window [app_id="chromium" title="^Meet - .*(?<!- Chromium)$"] floating enabl
 # single watcher running across reloads.
 # ZapZap's UI breaks if narrower than ~808px, so keep its width there; WhatsApp
 # Web is the same web app family, so pin it to 808 too.
-set $pin_group 40 20 0 app_id:signal-desktop:500:820 class:ZapZap:808:820 app_id:chrome-hnpfjngllnobngcgfapefoaidbinmjnm-Default:808:820
+set $pin_group 0 20 0 app_id:signal-desktop:500:820 class:ZapZap:808:820 app_id:chrome-hnpfjngllnobngcgfapefoaidbinmjnm-Default:808:820
 for_window [app_id="signal-desktop"] floating enable, sticky enable
 for_window [class="ZapZap"] floating enable, sticky enable
 for_window [app_id="chrome-hnpfjngllnobngcgfapefoaidbinmjnm-Default"] floating enable, sticky enable
