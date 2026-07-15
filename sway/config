@@ -285,10 +285,15 @@ for_window [app_id="chromium" title="^Meet - .*(?<!- Chromium)$"] floating enabl
 # single watcher running across reloads.
 # ZapZap's UI breaks if narrower than ~808px, so keep its width there; WhatsApp
 # Web is the same web app family, so pin it to 808 too.
+#
+# Each rule parks the window above the screen on open. sway runs for_window
+# commands inline while mapping the window, whereas the watcher only reacts once
+# the `new` IPC event has round-tripped through swaymsg, so the park always wins
+# the race and the window is never painted at its default size/place first.
 set $pin_group 0 20 0 app_id:signal-desktop:500:820 class:ZapZap:808:820 app_id:chrome-hnpfjngllnobngcgfapefoaidbinmjnm-Default:808:820
-for_window [app_id="signal-desktop"] floating enable, sticky enable
-for_window [class="ZapZap"] floating enable, sticky enable
-for_window [app_id="chrome-hnpfjngllnobngcgfapefoaidbinmjnm-Default"] floating enable, sticky enable
+for_window [app_id="signal-desktop"] floating enable, sticky enable, move position 0 -1000
+for_window [class="ZapZap"] floating enable, sticky enable, move position 0 -1000
+for_window [app_id="chrome-hnpfjngllnobngcgfapefoaidbinmjnm-Default"] floating enable, sticky enable, move position 0 -1000
 exec_always ~/.local/bin/float-top-right --watch $pin_group
 
 #
