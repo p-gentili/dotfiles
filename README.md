@@ -107,7 +107,8 @@ sudo usermod -aG input "$USER"   # then log out / back in
 
 A few apps open floating and centered instead of tiled, via `for_window` rules
 in `sway/config`: **Proton Authenticator**, the **Bitwarden** browser pop-out
-(matched by its Firefox window title), and the **scratch terminal**.
+(matched by its Firefox window title, and separately by its Chromium app window
+ID), and the **scratch terminal**.
 
 **`$mod+Shift+Return`** launches a floating scratch terminal for quick commands
 — a dark-tinted kitty (`#17251C`) that always opens centered. It runs through
