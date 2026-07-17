@@ -276,27 +276,30 @@ for_window [app_id="scratchterm"] floating enable, resize set 900 550, move posi
 # output/resolution.
 for_window [app_id="chromium" title="^Meet - .*(?<!- Chromium)$"] floating enable, sticky enable, exec ~/.local/bin/float-corner bottom-left 13 chromium "^Meet - .*(?<!- Chromium)\$"
 
-# Signal + ZapZap + WhatsApp Web: float, keep on all workspaces (sticky), and
-# pin to the top-right corner as a right-anchored horizontal row — one open sits
-# in the corner; several open line up side by side (Signal at the corner, then
-# ZapZap, then WhatsApp Web to the left). ZapZap (XWayland) is matched by class;
-# Signal and WhatsApp Web (a Chromium PWA) are native Wayland, matched by app_id.
+# Signal + ZapZap + WhatsApp Web + SilverBullet: float, keep on all workspaces
+# (sticky), and pin to the top-right corner as a right-anchored horizontal row —
+# one open sits in the corner; several open line up side by side (Signal at the
+# corner, then ZapZap, then WhatsApp Web, then SilverBullet to the left). ZapZap
+# (XWayland) is matched by class; Signal and the Chromium PWAs (WhatsApp Web,
+# SilverBullet) are native Wayland, matched by app_id.
 #
 # The float-top-right watcher owns sizing/positioning: it re-flows the group
 # both when a member opens and when one closes (sway's for_window fires only on
 # open), so closing one returns the survivor to the corner. exec_always keeps a
 # single watcher running across reloads.
 # ZapZap's UI breaks if narrower than ~808px, so keep its width there; WhatsApp
-# Web is the same web app family, so pin it to 808 too.
+# Web is the same web app family, so pin it to 808 too. SilverBullet is a note
+# pane rather than a chat list, so it takes Signal's narrower 500.
 #
 # Each rule parks the window above the screen on open. sway runs for_window
 # commands inline while mapping the window, whereas the watcher only reacts once
 # the `new` IPC event has round-tripped through swaymsg, so the park always wins
 # the race and the window is never painted at its default size/place first.
-set $pin_group 0 20 0 app_id:signal-desktop:500:820 class:ZapZap:808:820 app_id:chrome-hnpfjngllnobngcgfapefoaidbinmjnm-Default:808:820
+set $pin_group 0 20 0 app_id:signal-desktop:500:820 class:ZapZap:808:820 app_id:chrome-hnpfjngllnobngcgfapefoaidbinmjnm-Default:808:820 app_id:chrome-fdipokefdhaaimapnjbipmfdkahjjike-Default:500:820
 for_window [app_id="signal-desktop"] floating enable, sticky enable, move position 0 -1000
 for_window [class="ZapZap"] floating enable, sticky enable, move position 0 -1000
 for_window [app_id="chrome-hnpfjngllnobngcgfapefoaidbinmjnm-Default"] floating enable, sticky enable, move position 0 -1000
+for_window [app_id="chrome-fdipokefdhaaimapnjbipmfdkahjjike-Default"] floating enable, sticky enable, move position 0 -1000
 exec_always ~/.local/bin/float-top-right --watch $pin_group
 
 #

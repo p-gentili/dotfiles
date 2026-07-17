@@ -1,0 +1,95 @@
+#!/usr/bin/env python3
+"""Toggle one of the Chromium PWAs from waybar.
+
+  pwa-toggle <app>        launch if not running; hide (-> scratchpad) if
+                          visible; show + re-pin if hidden.
+  pwa-toggle <app> quit   close the PWA window, whether visible or hidden.
+
+<app> is a key of APPS below.
+
+Hiding uses sway's scratchpad rather than quitting, so the process keeps running
+and notifications keep arriving; showing is instant. Both hiding and showing emit
+a sway `move` event, which the float-top-right watcher ignores (it only reflows
+on new/close), so we signal that watcher (SIGUSR1 via its pidfile) to re-flow the
+top-right row: showing re-pins this window into it, hiding hands its slot back so
+the remaining members slide towards the corner. Launching needs no signal: the
+fresh window fires `new`, which the watcher already handles.
+"""
+import json
+import os
+import signal
+import subprocess
+import sys
+
+# Chromium derives a PWA's app_id from its install id, so both the window
+# selector and the launch command follow from the one id per app.
+APPS = {
+    "whatsapp": "hnpfjngllnobngcgfapefoaidbinmjnm",
+    "silverbullet": "fdipokefdhaaimapnjbipmfdkahjjike",
+}
+
+PROFILE = "Default"
+CHROMIUM = "/snap/bin/chromium"
+
+
+def swaymsg(*args):
+    return subprocess.run(["swaymsg", *args], capture_output=True, text=True)
+
+
+def find_state(app_id):
+    """Return 'absent', 'hidden' (in scratchpad), or 'visible'."""
+    tree = json.loads(swaymsg("-t", "get_tree").stdout)
+    state = "absent"
+
+    def walk(node, ws=None):
+        nonlocal state
+        if node.get("type") == "workspace":
+            ws = node.get("name")
+        if node.get("app_id") == app_id:
+            state = "hidden" if ws == "__i3_scratch" else "visible"
+        for child in node.get("nodes", []) + node.get("floating_nodes", []):
+            walk(child, ws)
+
+    walk(tree)
+    return state
+
+
+def signal_watcher():
+    """Ask the running float-top-right watcher to re-pin the row."""
+    runtime = os.environ.get("XDG_RUNTIME_DIR", "/tmp")
+    pidfile = os.path.join(runtime, "float-top-right-watch.pid")
+    try:
+        pid = int(open(pidfile).read().strip())
+        os.kill(pid, signal.SIGUSR1)
+    except (FileNotFoundError, ValueError, ProcessLookupError):
+        pass
+
+
+def main():
+    if len(sys.argv) < 2 or sys.argv[1] not in APPS:
+        sys.exit(f"usage: pwa-toggle {{{'|'.join(APPS)}}} [quit]")
+
+    install_id = APPS[sys.argv[1]]
+    app_id = f"chrome-{install_id}-{PROFILE}"
+    sel = f'[app_id="{app_id}"]'
+
+    if len(sys.argv) > 2 and sys.argv[2] == "quit":
+        swaymsg(f"{sel} kill")
+        return
+
+    state = find_state(app_id)
+    if state == "absent":
+        subprocess.Popen(
+            [CHROMIUM, f"--profile-directory={PROFILE}", f"--app-id={install_id}"],
+            start_new_session=True,
+        )
+    elif state == "visible":
+        swaymsg(f"{sel} move scratchpad")
+        signal_watcher()
+    else:  # hidden
+        swaymsg(f"{sel} scratchpad show, floating enable, sticky enable")
+        signal_watcher()
+
+
+if __name__ == "__main__":
+    main()

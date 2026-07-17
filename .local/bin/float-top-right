@@ -30,6 +30,9 @@ import sys
 import time
 
 
+SCRATCH_WS = "__i3_scratch"
+
+
 def swaymsg(*args):
     return subprocess.run(["swaymsg", *args], capture_output=True, text=True)
 
@@ -43,7 +46,13 @@ def parse_specs(items):
 
 
 def find_open(specs):
-    """Return {spec_index: (key, val, w, h, workspace_rect)} for open members."""
+    """Return {spec_index: (key, val, w, h, workspace_rect)} for visible members.
+
+    Members sitting in the scratchpad are skipped: they are hidden, so they must
+    not reserve a slot in the row (otherwise the survivors stay put instead of
+    sliding towards the corner), and the scratch workspace's rect is not a real
+    output rect to lay out against.
+    """
     tree = json.loads(swaymsg("-t", "get_tree").stdout)
     found = {}
 
@@ -55,7 +64,7 @@ def find_open(specs):
                 continue
             props = node.get("window_properties") or {}
             got = props.get("class") if key == "class" else node.get(key)
-            if got == val and ws is not None:
+            if got == val and ws is not None and ws.get("name") != SCRATCH_WS:
                 found[i] = (key, val, w, h, ws["rect"])
         for child in node.get("nodes", []) + node.get("floating_nodes", []):
             walk(child, ws)
@@ -98,7 +107,7 @@ def watch(specs, rmargin, gap, tmargin):
         sys.exit(0)
 
     def relayout(*_):
-        # On-demand re-pin (e.g. after whatsapp-toggle restores a member from
+        # On-demand re-pin (e.g. after pwa-toggle restores a member from
         # the scratchpad, which sway reports as `move`, not `new`/`close`).
         layout(specs, rmargin, gap, tmargin)
 

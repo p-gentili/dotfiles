@@ -21,6 +21,7 @@
         "battery",
         "tray",
         "custom/whatsapp",
+        "custom/silverbullet",
         "custom/power"
     ],
     "clock": {
@@ -90,8 +91,14 @@
     "custom/whatsapp": {
         "format": "",
         "tooltip": false,
-        "on-click": "~/.local/bin/whatsapp-toggle",
-        "on-click-middle": "~/.local/bin/whatsapp-toggle quit"
+        "on-click": "~/.local/bin/pwa-toggle whatsapp",
+        "on-click-middle": "~/.local/bin/pwa-toggle whatsapp quit"
+    },
+    "custom/silverbullet": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "~/.local/bin/pwa-toggle silverbullet",
+        "on-click-middle": "~/.local/bin/pwa-toggle silverbullet quit"
     },
     "custom/power": {
         "format": "{}",

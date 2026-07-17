@@ -58,6 +58,7 @@
 #custom-theme,
 #custom-power,
 #custom-whatsapp,
+#custom-silverbullet,
 #tray {
   padding: 6px 12px;
   color: @text;
@@ -70,6 +71,14 @@
 
 #custom-whatsapp:hover {
   color: @teal;
+}
+
+#custom-silverbullet {
+  font-size: 18px;
+}
+
+#custom-silverbullet:hover {
+  color: @subtext0;
 }
 
 #custom-power {
