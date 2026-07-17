@@ -276,6 +276,20 @@ for_window [app_id="scratchterm"] floating enable, resize set 900 550, move posi
 # output/resolution.
 for_window [app_id="chromium" title="^Meet - .*(?<!- Chromium)$"] floating enable, sticky enable, exec ~/.local/bin/float-corner bottom-left 13 chromium "^Meet - .*(?<!- Chromium)\$"
 
+# Firefox Picture-in-Picture: float, keep on all workspaces so the video follows
+# you, and pin to the bottom-left corner on open. Firefox titles the pop-out
+# exactly "Picture-in-Picture", so anchor the match to keep it off ordinary
+# Firefox windows (whose titles all end in "— Mozilla Firefox"). float-corner
+# keeps the window's own size, which is what the PiP resize grips are for.
+# Shares the corner with the Meet companion above; they overlap if a call and a
+# PiP video are ever up at once.
+#
+# Park the window above the screen first, exactly as the pinned row below does:
+# sway runs these commands inline while mapping the window, whereas float-corner
+# only runs once the `new` IPC event has round-tripped through swaymsg, so the
+# park wins the race and the pop-out is never painted where Firefox put it.
+for_window [app_id="firefox_firefox" title="^Picture-in-Picture$"] floating enable, sticky enable, move position 0 -1000, exec ~/.local/bin/float-corner bottom-left 13 firefox_firefox "^Picture-in-Picture\$"
+
 # Signal + ZapZap + WhatsApp Web + SilverBullet: float, keep on all workspaces
 # (sticky), and pin to the top-right corner as a right-anchored horizontal row —
 # one open sits in the corner; several open line up side by side (Signal at the
