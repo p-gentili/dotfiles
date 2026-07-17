@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
 """Toggle one of the top-right row's apps from waybar.
 
-  app-toggle <app>        launch if not running; hide (-> scratchpad) if
-                          visible; show + re-pin if hidden.
-  app-toggle <app> quit   close the window, whether visible or hidden.
+  app-toggle <app>         launch if not running; hide (-> scratchpad) if
+                           visible; show + re-pin if hidden.
+  app-toggle <app> quit    close the window, whether visible or hidden.
+  app-toggle <app> status  print waybar JSON: class `running` or `absent`.
 
 <app> is a key of APPS below.
+
+`status` backs the waybar button's dimming, so it draws the line where the eye
+does: a hidden window is still a running app (notifications keep arriving), and
+reads as solid; only a genuinely unlaunched app is dimmed. It reports the class
+alone and leaves the glyph to waybar's `format`.
 
 Hiding uses sway's scratchpad rather than quitting, so the process keeps running
 and notifications keep arriving; showing is instant. Both hiding and showing emit
@@ -81,14 +87,20 @@ def signal_watcher():
 
 def main():
     if len(sys.argv) < 2 or sys.argv[1] not in APPS:
-        sys.exit(f"usage: app-toggle {{{'|'.join(APPS)}}} [quit]")
+        sys.exit(f"usage: app-toggle {{{'|'.join(APPS)}}} [quit|status]")
 
     spec = APPS[sys.argv[1]]
     app_id = spec["app_id"]
     sel = f'[app_id="{app_id}"]'
+    action = sys.argv[2] if len(sys.argv) > 2 else None
 
-    if len(sys.argv) > 2 and sys.argv[2] == "quit":
+    if action == "quit":
         swaymsg(f"{sel} kill")
+        return
+
+    if action == "status":
+        running = find_state(app_id) != "absent"
+        print(json.dumps({"class": "running" if running else "absent"}))
         return
 
     state = find_state(app_id)

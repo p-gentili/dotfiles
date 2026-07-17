@@ -65,29 +65,27 @@
   color: @text;
 }
 
-#custom-whatsapp {
-  color: @green;
-  font-size: 18px;
-}
-
-#custom-whatsapp:hover {
-  color: @teal;
-}
-
+/* The row's launchers (Signal, WhatsApp, SilverBullet) share one look: they
+   inherit @text above, so they track the light/dark theme like the rest of the
+   bar rather than each carrying a brand colour. */
+#custom-signal,
+#custom-whatsapp,
 #custom-silverbullet {
   font-size: 18px;
 }
 
+#custom-signal:hover,
+#custom-whatsapp:hover,
 #custom-silverbullet:hover {
   color: @subtext0;
 }
 
-#custom-signal {
-  font-size: 18px;
-}
-
-#custom-signal:hover {
-  color: @subtext0;
+/* Dimmed until the app is actually running. A window hidden in the scratchpad
+   still counts as running -- it is only out of sight -- so it stays solid. */
+#custom-signal.absent,
+#custom-whatsapp.absent,
+#custom-silverbullet.absent {
+  opacity: 0.35;
 }
 
 #custom-power {

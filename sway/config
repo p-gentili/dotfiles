@@ -300,7 +300,9 @@ for_window [app_id="signal-desktop"] floating enable, sticky enable, move positi
 for_window [class="ZapZap"] floating enable, sticky enable, move position 0 -1000
 for_window [app_id="chrome-hnpfjngllnobngcgfapefoaidbinmjnm-Default"] floating enable, sticky enable, move position 0 -1000
 for_window [app_id="chrome-fdipokefdhaaimapnjbipmfdkahjjike-Default"] floating enable, sticky enable, move position 0 -1000
-exec_always ~/.local/bin/float-top-right --watch $pin_group
+# --on-change refreshes the waybar buttons (all three share signal 8) the moment
+# a member opens or closes, so they can show running/not-running without polling.
+exec_always ~/.local/bin/float-top-right --watch --on-change 'pkill -RTMIN+8 waybar' $pin_group
 
 #
 # Status Bar:

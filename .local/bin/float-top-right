@@ -11,7 +11,8 @@ Positions against the *workspace* rect (which sway shrinks to exclude waybar and
 the outer gap), so it stays correct on any output/resolution.
 
 Usage:
-  float-top-right [--watch] <right_margin> <gap> <top_margin> <SPEC>...
+  float-top-right [--watch] [--on-change CMD] <right_margin> <gap> <top_margin>
+                  <SPEC>...
   SPEC = <app_id|class>:<value>:<width>:<height>
          key is `app_id` (native Wayland) or `class` (XWayland, e.g. ZapZap)
 
@@ -21,6 +22,13 @@ With --watch it lays out once, then re-runs whenever a member opens or closes
 (sway fires `for_window` only on open, so the watcher is what returns the
 survivor to the corner when the other closes). Start exactly one via
 `exec_always`; each start replaces any previous instance.
+
+--on-change CMD runs CMD (via the shell) whenever the group's membership
+changes, i.e. on those same opens and closes. This keeps the "is it running?"
+knowledge in one place: we already subscribe to precisely these events, so an
+interested party (the waybar buttons) can be told rather than having to poll.
+Note that hiding a member to the scratchpad is deliberately *not* a change --
+the app is still running, it is only out of sight.
 """
 import json
 import os
@@ -93,7 +101,7 @@ def layout(specs, rmargin, gap, tmargin, retries=6):
         time.sleep(0.15)
 
 
-def watch(specs, rmargin, gap, tmargin):
+def watch(specs, rmargin, gap, tmargin, on_change=None):
     values = {val for _, val, _, _ in specs}
     layout(specs, rmargin, gap, tmargin)  # place whatever is already open
 
@@ -134,6 +142,8 @@ def watch(specs, rmargin, gap, tmargin):
                 # window just settled on "new"; already gone on "close"
                 layout(specs, rmargin, gap, tmargin,
                        retries=6 if event["change"] == "new" else 1)
+                if on_change:
+                    subprocess.Popen(on_change, shell=True)
 
 
 def take_singleton():
@@ -162,11 +172,15 @@ def main():
     watch_mode = bool(args) and args[0] == "--watch"
     if watch_mode:
         args = args[1:]
+    on_change = None
+    if len(args) > 1 and args[0] == "--on-change":
+        on_change = args[1]
+        args = args[2:]
     rmargin, gap, tmargin = int(args[0]), int(args[1]), int(args[2])
     specs = parse_specs(args[3:])
     if watch_mode:
         take_singleton()
-        watch(specs, rmargin, gap, tmargin)
+        watch(specs, rmargin, gap, tmargin, on_change)
     else:
         layout(specs, rmargin, gap, tmargin)
 
