@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Toggle one of the Chromium PWAs from waybar.
+"""Toggle one of the top-right row's apps from waybar.
 
-  pwa-toggle <app>        launch if not running; hide (-> scratchpad) if
+  app-toggle <app>        launch if not running; hide (-> scratchpad) if
                           visible; show + re-pin if hidden.
-  pwa-toggle <app> quit   close the PWA window, whether visible or hidden.
+  app-toggle <app> quit   close the window, whether visible or hidden.
 
 <app> is a key of APPS below.
 
@@ -21,15 +21,29 @@ import signal
 import subprocess
 import sys
 
-# Chromium derives a PWA's app_id from its install id, so both the window
-# selector and the launch command follow from the one id per app.
-APPS = {
-    "whatsapp": "hnpfjngllnobngcgfapefoaidbinmjnm",
-    "silverbullet": "fdipokefdhaaimapnjbipmfdkahjjike",
-}
-
 PROFILE = "Default"
 CHROMIUM = "/snap/bin/chromium"
+
+
+def pwa(install_id):
+    """Spec for a Chromium PWA, which derives its app_id from its install id, so
+    both the window selector and the launch command follow from that one id."""
+    return {
+        "app_id": f"chrome-{install_id}-{PROFILE}",
+        "launch": [CHROMIUM, f"--profile-directory={PROFILE}",
+                   f"--app-id={install_id}"],
+    }
+
+
+# Signal is an Electron app rather than a PWA, so it names itself. It is set to
+# DoNotUseSystemTray (see ephemeral.json) precisely so it cannot vanish into the
+# tray behind our back: hiding it is the scratchpad's job, like every other
+# member of the row.
+APPS = {
+    "whatsapp": pwa("hnpfjngllnobngcgfapefoaidbinmjnm"),
+    "silverbullet": pwa("fdipokefdhaaimapnjbipmfdkahjjike"),
+    "signal": {"app_id": "signal-desktop", "launch": ["/snap/bin/signal-desktop"]},
+}
 
 
 def swaymsg(*args):
@@ -67,10 +81,10 @@ def signal_watcher():
 
 def main():
     if len(sys.argv) < 2 or sys.argv[1] not in APPS:
-        sys.exit(f"usage: pwa-toggle {{{'|'.join(APPS)}}} [quit]")
+        sys.exit(f"usage: app-toggle {{{'|'.join(APPS)}}} [quit]")
 
-    install_id = APPS[sys.argv[1]]
-    app_id = f"chrome-{install_id}-{PROFILE}"
+    spec = APPS[sys.argv[1]]
+    app_id = spec["app_id"]
     sel = f'[app_id="{app_id}"]'
 
     if len(sys.argv) > 2 and sys.argv[2] == "quit":
@@ -79,10 +93,7 @@ def main():
 
     state = find_state(app_id)
     if state == "absent":
-        subprocess.Popen(
-            [CHROMIUM, f"--profile-directory={PROFILE}", f"--app-id={install_id}"],
-            start_new_session=True,
-        )
+        subprocess.Popen(spec["launch"], start_new_session=True)
     elif state == "visible":
         swaymsg(f"{sel} move scratchpad")
         signal_watcher()

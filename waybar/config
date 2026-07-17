@@ -20,6 +20,7 @@
         "pulseaudio",
         "battery",
         "tray",
+        "custom/signal",
         "custom/whatsapp",
         "custom/silverbullet",
         "custom/power"
@@ -88,17 +89,23 @@
         "on-click": "~/.local/bin/theme-toggle",
         "tooltip": false
     },
+    "custom/signal": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "~/.local/bin/app-toggle signal",
+        "on-click-middle": "~/.local/bin/app-toggle signal quit"
+    },
     "custom/whatsapp": {
         "format": "",
         "tooltip": false,
-        "on-click": "~/.local/bin/pwa-toggle whatsapp",
-        "on-click-middle": "~/.local/bin/pwa-toggle whatsapp quit"
+        "on-click": "~/.local/bin/app-toggle whatsapp",
+        "on-click-middle": "~/.local/bin/app-toggle whatsapp quit"
     },
     "custom/silverbullet": {
         "format": "",
         "tooltip": false,
-        "on-click": "~/.local/bin/pwa-toggle silverbullet",
-        "on-click-middle": "~/.local/bin/pwa-toggle silverbullet quit"
+        "on-click": "~/.local/bin/app-toggle silverbullet",
+        "on-click-middle": "~/.local/bin/app-toggle silverbullet quit"
     },
     "custom/power": {
         "format": "{}",

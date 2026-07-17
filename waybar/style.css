@@ -57,6 +57,7 @@
 #battery,
 #custom-theme,
 #custom-power,
+#custom-signal,
 #custom-whatsapp,
 #custom-silverbullet,
 #tray {
@@ -78,6 +79,14 @@
 }
 
 #custom-silverbullet:hover {
+  color: @subtext0;
+}
+
+#custom-signal {
+  font-size: 18px;
+}
+
+#custom-signal:hover {
   color: @subtext0;
 }
 

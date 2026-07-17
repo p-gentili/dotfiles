@@ -107,7 +107,7 @@ def watch(specs, rmargin, gap, tmargin):
         sys.exit(0)
 
     def relayout(*_):
-        # On-demand re-pin (e.g. after pwa-toggle restores a member from
+        # On-demand re-pin (e.g. after app-toggle restores a member from
         # the scratchpad, which sway reports as `move`, not `new`/`close`).
         layout(specs, rmargin, gap, tmargin)
 
