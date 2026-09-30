@@ -293,6 +293,12 @@ for_window [app_id="chromium" title="^Meet - .*(?<!- Chromium)$"] floating enabl
 # park wins the race and the pop-out is never painted where Firefox put it.
 for_window [app_id="firefox_firefox" title="^Picture-in-Picture$"] floating enable, sticky enable, move position 0 -1000, exec ~/.local/bin/float-corner bottom-left 13 firefox_firefox "^Picture-in-Picture\$"
 
+# blueman's "Bluetooth Devices" window: float it, keep it on all workspaces
+# (sticky), and pin it to the top-right corner, just below waybar. Parked above
+# the screen first (like the PiP rule above) so it is never painted where
+# blueman put it before float-corner moves it.
+for_window [app_id="blueman-manager"] floating enable, sticky enable, resize set 520 640, move position 0 -1000, exec ~/.local/bin/float-corner top-right 0 blueman-manager
+
 # Signal + ZapZap + WhatsApp Web + SilverBullet: float, keep on all workspaces
 # (sticky), and pin to the top-right corner as a right-anchored horizontal row —
 # one open sits in the corner; several open line up side by side (Signal at the
@@ -335,6 +341,7 @@ include theme.conf
 
 exec mako
 exec_always nm-applet --indicator
+exec_always ~/.local/bin/bluetooth-tray
 # MX Ergo horizontal wheel tilt -> workspace switching (mouse-only; touchpad uses swipe gesture)
 exec ~/.local/bin/wheel-workspace
 

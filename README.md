@@ -12,7 +12,7 @@ Personal config for a Sway (Wayland) desktop and terminal tooling.
 - **kitty/**, **foot/** — terminals (follow the system light/dark preference)
 - **nvim/**, **vim/**, **helix/** — editors
 - **zsh/**, **.tmux.conf**, **zellij/**, **opencode/** — shell & tooling
-- **.local/bin/** — helper scripts (`vol-notify`, `bright-notify`, `screenshot`, `scratchterm`, `power-actions`, `wheel-workspace`)
+- **.local/bin/** — helper scripts (`vol-notify`, `bright-notify`, `screenshot`, `scratchterm`, `power-actions`, `wheel-workspace`, `bluetooth-tray`)
 
 ## Dependencies
 
@@ -22,7 +22,7 @@ Install before running `link.sh`:
 sudo apt install -y \
     sway waybar mako-notifier wofi \
     swaylock swayidle libpam-pwdfile grim slurp brightnessctl playerctl \
-    wl-clipboard cliphist python3-evdev
+    wl-clipboard cliphist python3-evdev blueman
 ```
 
 `wl-clip-persist` isn't packaged for Ubuntu or published on crates.io; install

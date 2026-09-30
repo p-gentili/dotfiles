@@ -33,7 +33,7 @@ def find_window(app_id, title_re):
         if (node.get("app_id") == app_id and ws is not None
                 and node.get("type") == "floating_con"
                 and (title_re is None or title_re.search(name))):
-            match = (node["rect"], ws["rect"], node["id"])
+            match = (node["rect"], ws["rect"], node["id"], node["deco_rect"])
         for child in node.get("nodes", []) + node.get("floating_nodes", []):
             walk(child, ws)
 
@@ -46,22 +46,18 @@ def place(corner, gap, app_id, title_re, retries=8):
         found = find_window(app_id, title_re)
         # wait until the window is floating and has settled to a real size
         if found and found[0]["width"] > 1 and found[0]["height"] > 1:
-            win, ws, con_id = found
+            win, ws, con_id, deco = found
             left = "left" in corner
             top = "top" in corner
-            # desired top-left of the *content* rect
-            tx = ws["x"] + (gap if left else ws["width"] - win["width"] - gap)
-            ty = ws["y"] + (gap if top else ws["height"] - win["height"] - gap)
-            # `move position` places the window frame (title bar/borders), which
-            # the tree reports separately from the content rect. Move once, see
-            # where the content landed, then correct by the delta so the content
-            # sits exactly at the target regardless of decoration size.
-            swaymsg(f'[con_id={con_id}] move position {tx} {ty}')
-            after = find_window(app_id, title_re)
-            if after:
-                ax, ay = after[0]["x"], after[0]["y"]
-                swaymsg(f'[con_id={con_id}] move position '
-                        f'{2 * tx - ax} {2 * ty - ay}')
+            # The whole frame is the tree's rect (content + borders) plus the
+            # title bar stacked above it, deco["height"] tall (0 with none).
+            # Fit that frame in the corner so a title bar never pokes up over
+            # waybar, then place its top-left with `move absolute position`
+            # (plain `move position` is workspace-relative).
+            frame_h = win["height"] + deco["height"]
+            fx = ws["x"] + (gap if left else ws["width"] - win["width"] - gap)
+            fy = ws["y"] + (gap if top else ws["height"] - frame_h - gap)
+            swaymsg(f'[con_id={con_id}] move absolute position {fx} {fy}')
             return
         time.sleep(0.15)
 

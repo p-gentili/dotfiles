@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# (Re)start blueman's tray icon so it lands in the waybar tray.
+#
+# blueman registers its StatusNotifierItem once, at startup, and does not
+# re-register when the tray host comes back. waybar *is* that host, and sway
+# restarts it on every reload, so a plain `exec_always blueman-applet` races the
+# new waybar: blueman registers with the dying one and the icon is lost. Run
+# from exec_always, this kills the old blueman, waits for the tray watcher to be
+# owned by a waybar other than the one that was up when we were called (i.e.
+# the fresh one), then starts blueman against it.
+set -uo pipefail
+
+watcher_pid() {
+    busctl --user status org.kde.StatusNotifierWatcher 2>/dev/null \
+        | sed -n 's/^PID=//p'
+}
+
+old=$(watcher_pid)
+
+pkill -x blueman-applet
+pkill -x blueman-tray
+
+# Give up after ~10s (e.g. waybar did not restart) and start anyway.
+for _ in $(seq 50); do
+    cur=$(watcher_pid)
+    [ -n "$cur" ] && [ "$cur" != "$old" ] && break
+    sleep 0.2
+done
+
+exec blueman-applet
