@@ -22,7 +22,6 @@
         "tray",
         "custom/signal",
         "custom/whatsapp",
-        "custom/silverbullet",
         "custom/power"
     ],
     "clock": {
@@ -108,16 +107,6 @@
         "tooltip": false,
         "on-click": "~/.local/bin/app-toggle whatsapp",
         "on-click-middle": "~/.local/bin/app-toggle whatsapp quit"
-    },
-    "custom/silverbullet": {
-        "format": "",
-        "return-type": "json",
-        "exec": "~/.local/bin/app-toggle silverbullet status",
-        "interval": "once",
-        "signal": 8,
-        "tooltip": false,
-        "on-click": "~/.local/bin/app-toggle silverbullet",
-        "on-click-middle": "~/.local/bin/app-toggle silverbullet quit"
     },
     "custom/power": {
         "format": "{}",

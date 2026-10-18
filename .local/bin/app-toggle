@@ -47,7 +47,6 @@ def pwa(install_id):
 # member of the row.
 APPS = {
     "whatsapp": pwa("hnpfjngllnobngcgfapefoaidbinmjnm"),
-    "silverbullet": pwa("fdipokefdhaaimapnjbipmfdkahjjike"),
     "signal": {"app_id": "signal-desktop", "launch": ["/snap/bin/signal-desktop"]},
 }
 
