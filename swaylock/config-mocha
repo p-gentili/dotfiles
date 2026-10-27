@@ -1,5 +1,6 @@
 ignore-empty-password
 daemonize
+image=/home/paolo.gentili@canonical.com/Pictures/Palette Wallpaper 5k 6 BW.png
 indicator-radius=100
 indicator-thickness=8
 color=1e1e2e
