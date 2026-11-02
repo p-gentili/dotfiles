@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Lock the screen (dark Catppuccin Mocha).
+#
+# This stays a one-shot that only starts swaylock. Blanking the monitor and
+# powering it back on are handled entirely by the main swayidle in sway/config
+# (a `pgrep swaylock`-gated dpms timeout with a matching resume), so the display
+# is never turned off out-of-band from the instance that owns waking it back up.
+# That is what keeps manual locks and idle locks behaving identically.
+set -euo pipefail
+
+# The idle timeout, the keybind and before-sleep can all fire; don't stack lockers.
+if pgrep -x swaylock >/dev/null; then
+    exit 0
+fi
+
+exec swaylock -C "$HOME/.config/swaylock/config-mocha"
