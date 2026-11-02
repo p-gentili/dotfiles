@@ -94,13 +94,21 @@ export PATH=$HOME/.npm-global/bin:$PATH
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
 export NVM_DIR="$HOME/.nvm"
-# Lazy-load nvm on first use (sourcing it costs ~1s)
-_nvm_lazy() {
-  unset -f nvm node npm npx
+# Put the default nvm node on PATH without sourcing nvm, so scripts with a
+# `#!/usr/bin/env node` shebang (e.g. pi) can find it
+if [ -r "$NVM_DIR/alias/default" ]; then
+  _nvm_default=$(<"$NVM_DIR/alias/default")
+  _nvm_bins=("$NVM_DIR"/versions/node/v${_nvm_default#v}*/bin(N/nOn))
+  (( $#_nvm_bins )) && export PATH="$_nvm_bins[1]:$PATH"
+  unset _nvm_default _nvm_bins
+fi
+# Lazy-load nvm itself on first use (sourcing it costs ~1s)
+nvm() {
+  unset -f nvm
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+  nvm "$@"
 }
-for c in nvm node npm npx; do eval "$c() { _nvm_lazy; $c \"\$@\"; }"; done
 
 # Plugins - Must source at the end
 source ~/dotfiles/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
