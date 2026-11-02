@@ -1,9 +1,113 @@
 # git
 alias gbv="git branch -vv"
-alias gco="git checkout"
+# git checkout, but land in the worktree when the branch already lives in one.
+#   gco <branch>       cd to the worktree holding <branch>, else check it out here
+#   gco <anything else>  plain git checkout (-b, -, --, paths, ...)
+function gco() {
+    emulate -L zsh
+
+    # Only a bare single branch name can be a worktree; everything else is git's.
+    if (( $# == 1 )) && [[ $1 != -* ]] \
+        && git rev-parse --verify --quiet "refs/heads/$1" >/dev/null
+    then
+        local worktree=$(git for-each-ref --format='%(worktreepath)' -- "refs/heads/$1")
+
+        if [[ -n $worktree && $worktree != $(git rev-parse --show-toplevel) ]]; then
+            print -- "gco: $1 is checked out at $worktree"
+            cd -- $worktree
+            return
+        fi
+    fi
+
+    git checkout "$@"
+}
+# Delete local branches whose upstream is gone (merged PR, deleted remote branch).
+#   gdo                prune; branches held by a worktree are reported, not touched
+#   gdo -n             dry run, show what would go
+#   gdo -f             also remove the worktrees holding those branches
+#   gdo -r <remote>    use a remote other than origin
 function gdo() {
-    git fetch -p
-    git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -D
+    emulate -L zsh
+
+    local remote=origin
+    local -i dry_run=0 force=0
+
+    while (( $# )); do
+        case $1 in
+            (-n|--dry-run) dry_run=1 ;;
+            (-f|--force)   force=1 ;;
+            (-r|--remote)
+                [[ -n $2 ]] || { print -u2 'gdo: -r needs a remote name'; return 2 }
+                remote=$2; shift ;;
+            (-h|--help)
+                print -- 'usage: gdo [-n|--dry-run] [-f|--force] [-r|--remote <remote>]'
+                return 0 ;;
+            (*) print -u2 "gdo: unknown argument: $1"; return 2 ;;
+        esac
+        shift
+    done
+
+    git rev-parse --git-dir >/dev/null 2>&1 || {
+        print -u2 'gdo: not inside a git repository'
+        return 1
+    }
+
+    git fetch --prune --quiet -- $remote || return 1
+    git worktree prune
+
+    # "<branch>\t<worktree path>" for every branch whose upstream is gone
+    local -a gone
+    gone=(${(f)"$(git for-each-ref refs/heads \
+        --format='%(if:equals=[gone])%(upstream:track)%(then)%(refname:short)%09%(worktreepath)%(end)')"})
+    gone=(${gone:#})
+
+    if (( ! $#gone )); then
+        print -- "gdo: nothing to prune, no branch tracks a deleted $remote branch"
+        return 0
+    fi
+
+    local here=$(git rev-parse --show-toplevel)
+    local -a doomed held
+    local line branch worktree
+
+    for line in $gone; do
+        branch=${line%%$'\t'*}
+        worktree=${line#*$'\t'}
+
+        if [[ -z $worktree ]]; then
+            doomed+=($branch)
+        elif [[ $worktree == $here ]]; then
+            print -u2 "gdo: skipping $branch, checked out here; switch away to prune it"
+        elif (( ! force )); then
+            held+=("$branch -> $worktree")
+        elif (( dry_run )); then
+            print -- "gdo: would remove worktree $worktree"
+            doomed+=($branch)
+        elif git worktree remove -- $worktree; then
+            print -- "gdo: removed worktree $worktree"
+            doomed+=($branch)
+        else
+            print -u2 "gdo: keeping $branch, could not remove its worktree $worktree"
+        fi
+    done
+
+    if (( $#held )); then
+        print -u2 'gdo: held by a worktree, re-run with -f to remove them too:'
+        printf '  %s\n' $held >&2
+    fi
+
+    if (( ! $#doomed )); then
+        print -- 'gdo: no branches left to delete'
+        return 0
+    fi
+
+    if (( dry_run )); then
+        print -- 'gdo: would delete:'
+        printf '  %s\n' $doomed
+        return 0
+    fi
+
+    git branch -D -- $doomed
 }
 function gbm() {
     (git checkout main || git checkout master) && git checkout -b $1
