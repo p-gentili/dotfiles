@@ -23,6 +23,8 @@ bindkey '^ ' autosuggest-accept
 # Autocomplete matches caps letter
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+# gco is a function (see .zsh_alias), so it needs git checkout's completion by hand.
+compdef _git gco=git-checkout
 
 # Fzf bindings
 source ~/dotfiles/zsh/fzf/key-bindings.zsh
@@ -87,13 +89,18 @@ if [ -d ~/.pyenv ]; then
     eval "$(pyenv init -)"
 fi
 
-echo "export PATH=~/.npm-global/bin:$PATH" >> ~/.profile
+export PATH=$HOME/.npm-global/bin:$PATH
 
-. "$HOME.local/bin/env"
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Lazy-load nvm on first use (sourcing it costs ~1s)
+_nvm_lazy() {
+  unset -f nvm node npm npx
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+}
+for c in nvm node npm npx; do eval "$c() { _nvm_lazy; $c \"\$@\"; }"; done
 
 # Plugins - Must source at the end
 source ~/dotfiles/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
