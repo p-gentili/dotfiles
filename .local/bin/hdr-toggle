@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Usage: hdr-toggle [output]   -- defaults to the focused output
+#
+# swaymsg answers {"success": true} even when sway refuses the change (e.g.
+# under the GLES2 renderer, which has no output color transforms), so the new
+# state is read back from get_outputs instead of trusted from the reply.
+set -u
+
+notify() {
+    notify-send -h string:x-canonical-private-synchronous:hdr "$@"
+}
+
+query() {
+    swaymsg -t get_outputs -r | jq -r --arg n "$1" \
+        'map(select(if $n == "" then .focused else .name == $n end))[0]
+         | if . == null then "" else "\(.name) \(.hdr // false)" end'
+}
+
+STATUS=$(query "${1:-}")
+if [[ -z "$STATUS" ]]; then
+    notify "HDR: no such output"
+    exit 1
+fi
+read -r NAME STATE <<< "$STATUS"
+
+[[ "$STATE" == "true" ]] && WANT=off || WANT=on
+swaymsg output "$NAME" hdr "$WANT" >/dev/null
+
+read -r _ NEW <<< "$(query "$NAME")"
+if [[ "$NEW" == "$([[ $WANT == on ]] && echo true || echo false)" ]]; then
+    notify "HDR: $WANT ($NAME)"
+else
+    REASON=$(journalctl -b --no-pager --since "5 seconds ago" 2>/dev/null |
+             grep -o 'Cannot [a-z]* HDR on output .*' | tail -1)
+    notify "HDR: unchanged ($NAME)" "${REASON:-sway refused the change}"
+fi

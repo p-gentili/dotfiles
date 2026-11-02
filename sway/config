@@ -53,7 +53,7 @@ exec swayidle -w \
     timeout 5 'pgrep -x swaylock >/dev/null && swaymsg "output * dpms off"' \
         resume 'swaymsg "output * dpms on"' \
     timeout 600 '~/.local/bin/lock' \
-    after-resume 'swaymsg "output eDP-1 enable dpms on"' \
+    after-resume 'grep -q open /proc/acpi/button/lid/*/state && swaymsg "output eDP-1 enable dpms on" || swaymsg "output eDP-1 disable"' \
     before-sleep 'swaylock -f -C ~/.config/swaylock/config-mocha'
 
 ### Input configuration
@@ -248,6 +248,11 @@ bindsym XF86MonBrightnessUp exec ~/.local/bin/bright-notify 5%+
 bindsym XF86MonBrightnessDown exec ~/.local/bin/bright-notify 5%-
 
 #
+# HDR (only works under the Vulkan renderer: WLR_RENDERER=vulkan)
+#
+bindsym $mod+Ctrl+h exec ~/.local/bin/hdr-toggle
+
+#
 # Screenshots
 #
 bindsym Print exec ~/.local/bin/screenshot full
@@ -259,6 +264,9 @@ bindsym $mod+Print exec ~/.local/bin/screenshot window
 
 # Mattermost Desktop draws its own titlebar; hide Sway's frame.
 for_window [app_id="Mattermost.Desktop"] border none
+
+# Firefox draws its own titlebar; hide Sway's frame.
+for_window [app_id="firefox_firefox"] border none
 
 # Proton Authenticator: float, size compact, and center on open
 for_window [app_id="proton-authenticator"] floating enable, resize set 450 720, move position center
