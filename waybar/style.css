@@ -89,6 +89,13 @@ window#waybar > box {
   opacity: 0.35;
 }
 
+/* Thin dividers either side of the clock, set apart from the icons around it. */
+#clock {
+  border-left: 1px solid @overlay0;
+  border-right: 1px solid @overlay0;
+  margin: 4px 0;
+}
+
 #custom-power {
   color: @red;
 }

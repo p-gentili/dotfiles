@@ -8,9 +8,7 @@
     "modules-left": [
         "sway/workspaces"
     ],
-    "modules-center": [
-        "clock"
-    ],
+    "modules-center": [],
     "modules-right": [
         "custom/theme",
         "cpu",
@@ -22,10 +20,11 @@
         "tray",
         "custom/signal",
         "custom/whatsapp",
+        "clock",
         "custom/power"
     ],
     "clock": {
-        "format": "{:%A %d %B - %H:%M}",
+        "format": "{:%d %b - %H:%M}",
         "tooltip-format": "<tt>{calendar}</tt>",
         "calendar": {
                     "mode"          : "month",
