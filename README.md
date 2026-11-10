@@ -12,7 +12,19 @@ Personal config for a Sway (Wayland) desktop and terminal tooling.
 - **kitty/**, **foot/** — terminals (follow the system light/dark preference)
 - **nvim/**, **vim/**, **helix/** — editors
 - **zsh/**, **.tmux.conf**, **zellij/**, **opencode/** — shell & tooling
-- **.local/bin/** — helper scripts (`vol-notify`, `bright-notify`, `screenshot`, `scratchterm`, `power-actions`, `wheel-workspace`, `bluetooth-tray`)
+- **.local/bin/** — helper scripts:
+  - `vol-notify`, `bright-notify` — change volume / backlight and show an OSD
+  - `screenshot` — full screen, region or window capture
+  - `lock` — start swaylock (no stacking if already locked)
+  - `power-actions` — waybar power button menu (shutdown, reboot, suspend)
+  - `power-menu` — waybar battery click menu (power profile)
+  - `theme-apply`, `theme-toggle`, `theme-status` — switch and report light/dark (Latte/Mocha)
+  - `scratchterm` — floating scratch terminal (`$mod+Shift+Return`)
+  - `float-corner`, `float-top-right` — pin floating windows (PiP, Meet, chat apps) to screen corners
+  - `app-toggle` — waybar buttons that show/hide/quit Signal and WhatsApp
+  - `hdr-toggle` — toggle HDR on an output (Vulkan renderer only)
+  - `wheel-workspace` — MX Ergo wheel tilt switches workspaces
+  - `bluetooth-tray` — (re)start blueman's tray icon so it shows in waybar
 
 ## Dependencies
 
