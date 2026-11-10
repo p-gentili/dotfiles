@@ -30,7 +30,14 @@ it from its GitHub repo (needs a Rust toolchain):
 
 ```bash
 cargo install --git https://github.com/Linus789/wl-clip-persist.git
+ln -sfn ~/.cargo/bin/wl-clip-persist ~/.local/bin/wl-clip-persist
 ```
+
+Sway is started by GDM with a system-only `PATH` (no `~/.cargo/bin` or
+`~/.local/bin`), so a bare `exec wl-clip-persist` fails with "not found". The
+symlink gives it a stable location, and `sway/config` starts it by its full
+path, `~/.local/bin/wl-clip-persist`, the same way it starts the other helper
+scripts.
 
 Waybar uses Nerd Font icon glyphs. Ubuntu's `fonts-font-awesome` is Font
 Awesome 4 and does **not** provide them, so install a Nerd Font at user level
