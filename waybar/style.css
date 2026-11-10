@@ -32,20 +32,28 @@ window#waybar > box {
 
 #workspaces button.focused,
 #workspaces button.active {
-  background: @mauve;
-  color: @base;
+  background: @ws-focused;
+  color: @ws-focused-fg;
   font-weight: bold;
   border-radius: 8px;
 }
 
-#workspaces button.visible {
+#workspaces button.visible:not(.focused) {
   background: @surface0;
   color: @text;
 }
 
+/* Hovering previews the focused look at half strength, and a focused
+   workspace deepens slightly instead of losing its colour. */
 #workspaces button:hover {
-  background: @surface1;
+  background: alpha(@mauve, 0.15);
   color: @text;
+}
+
+#workspaces button.focused:hover,
+#workspaces button.active:hover {
+  background: @ws-focused-hover;
+  color: @ws-focused-fg;
 }
 
 #workspaces button.urgent {

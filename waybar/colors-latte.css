@@ -10,3 +10,8 @@
 @define-color green    #40a02b;
 @define-color teal     #179299;
 @define-color overlay0 #9ca0b0;
+
+/* Focused workspace: a light page needs a stronger tint to carry white text. */
+@define-color ws-focused       alpha(@mauve, 0.7);
+@define-color ws-focused-hover alpha(@mauve, 0.85);
+@define-color ws-focused-fg    @base;

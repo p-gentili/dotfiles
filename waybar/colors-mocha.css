@@ -10,3 +10,8 @@
 @define-color green    #a6e3a1;
 @define-color teal     #94e2d5;
 @define-color overlay0 #6c7086;
+
+/* Focused workspace: on a dark page a faint tint already carries white text. */
+@define-color ws-focused       alpha(@mauve, 0.3);
+@define-color ws-focused-hover alpha(@mauve, 0.4);
+@define-color ws-focused-fg    @text;
