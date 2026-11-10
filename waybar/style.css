@@ -5,8 +5,13 @@
   font-size: 14px;
 }
 
-#waybar {
+window#waybar {
+    background: transparent;
+}
+
+window#waybar > box {
     background-color: alpha(@mantle, 0.85);
+    border-radius: 10px;
     color: @text;
 }
 
