@@ -11,6 +11,8 @@ window#waybar {
 
 window#waybar > box {
     background-color: alpha(@mantle, 0.85);
+    /* Soft mauve edge, in the same colour family as the menus' borders. */
+    border: 1px solid alpha(@mauve, 0.5);
     border-radius: 10px;
     color: @text;
 }

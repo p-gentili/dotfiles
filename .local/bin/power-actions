@@ -12,7 +12,7 @@ choice=$(printf '%s\n' "  Shutdown" "  Reboot" "  Suspend" \
     | wofi --dmenu --prompt "Power" \
            --width 200 --height 160 \
            --location top_right --xoffset -30 --yoffset 10 \
-           --style ~/.config/wofi/style.css)
+           --style ~/.config/wofi/style-mocha.css)  # dark, like waybar
 
 case "${choice:-}" in
   *Shutdown) systemctl poweroff ;;

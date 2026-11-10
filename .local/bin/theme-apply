@@ -15,15 +15,13 @@ cfg="$HOME/.config"
 # 1. XDG color-scheme (kitty, nvim follow this automatically)
 gsettings set org.gnome.desktop.interface color-scheme "$scheme"
 
-# 2. Repoint per-app theme symlinks
-ln -snf "colors-${variant}.css" "$cfg/waybar/colors.css"
-ln -snf "calendar-${variant}.json" "$cfg/waybar/calendar.json"
+# 2. Repoint per-app theme symlinks (waybar is always dark, so it has none)
 ln -snf "theme-${variant}.conf" "$cfg/sway/theme.conf"
 ln -snf "style-${variant}.css"  "$cfg/wofi/style.css"
 ln -snf "config-${variant}"     "$cfg/swaylock/config"
 ln -snf "config-${variant}"     "$cfg/mako/config"
 
 # 3. Reload running apps (best-effort; ignore if not running)
-pkill -SIGUSR2 waybar    || true
+pkill -SIGUSR2 waybar    || true   # refresh the ☀/☾ icon now
 swaymsg reload           || true
 makoctl reload           || true

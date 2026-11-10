@@ -195,8 +195,12 @@ run `theme-toggle`. To force a mode: `theme-apply light` / `theme-apply dark`.
 
 How it works: the freedesktop `color-scheme` preference is the source of truth —
 **kitty and nvim follow it automatically**. `theme-apply` also repoints a
-gitignored per-app pointer symlink (`colors.css`, `theme.conf`, `style.css`,
-`config`) to the Latte or Mocha variant and reloads waybar, sway, and mako.
+gitignored per-app pointer symlink (`theme.conf`, `style.css`, `config`) to
+the Latte or Mocha variant and reloads waybar, sway, and mako.
+
+Waybar stays **Mocha (dark) in both modes**, and so do the menus that drop
+from it (power, power profile, calendar tooltip), so the bar and its popups
+read as one unit. The app launcher and clipboard picker follow the theme.
 `link.sh` seeds those pointers to Latte on a fresh checkout; git never tracks
 which mode is active, so `git status` stays clean either way.
 

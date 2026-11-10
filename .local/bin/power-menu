@@ -13,6 +13,6 @@ choice=$(powerprofilesctl list | grep -Eo '(performance|balanced|power-saver)' |
     | wofi --dmenu --prompt "Power [$current]" \
            --width 220 --height 170 \
            --location top_right --xoffset -30 --yoffset 10 \
-           --style ~/.config/wofi/style.css)
+           --style ~/.config/wofi/style-mocha.css)  # dark, like waybar
 
 [ -n "${choice:-}" ] && powerprofilesctl set "$choice"
