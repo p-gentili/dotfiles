@@ -7,7 +7,7 @@ brightnessctl set "$CMD" >/dev/null
 # read new brightness as a percentage
 CUR=$(brightnessctl get)
 MAX=$(brightnessctl max)
-PCT=$(( CUR * 100 / MAX ))
+PCT=$(( (CUR * 200 + MAX) / (2 * MAX) ))  # round, like waybar
 
 notify-send -h int:value:"$PCT" \
     -h string:x-canonical-private-synchronous:brightness \
