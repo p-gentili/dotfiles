@@ -1,0 +1,13 @@
+// Calendar tooltip colours for the clock (Catppuccin Mocha).
+// Merged into "clock" via the "include" in config; theme-apply repoints
+// calendar.json at the active variant.
+{
+    "clock": {
+        "calendar": {
+            "format": {
+                "weekdays": "<span color='#fab387'><b>{}</b></span>",
+                "today":    "<span color='#cba6f7'><b><u>{}</u></b></span>"
+            }
+        }
+    }
+}

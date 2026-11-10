@@ -17,6 +17,7 @@ gsettings set org.gnome.desktop.interface color-scheme "$scheme"
 
 # 2. Repoint per-app theme symlinks
 ln -snf "colors-${variant}.css" "$cfg/waybar/colors.css"
+ln -snf "calendar-${variant}.json" "$cfg/waybar/calendar.json"
 ln -snf "theme-${variant}.conf" "$cfg/sway/theme.conf"
 ln -snf "style-${variant}.css"  "$cfg/wofi/style.css"
 ln -snf "config-${variant}"     "$cfg/swaylock/config"

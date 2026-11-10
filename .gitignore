@@ -3,6 +3,7 @@
 .local/bin/__pycache__/
 sway/theme.conf
 waybar/colors.css
+waybar/calendar.json
 wofi/style.css
 swaylock/config
 swaylock/passwd

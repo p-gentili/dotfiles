@@ -1,4 +1,6 @@
 {
+    // Theme-specific calendar colours (see calendar-latte/mocha.json).
+    "include": ["~/.config/waybar/calendar.json"],
     "layer": "top",
     "height": 40,
     "spacing": 4,
@@ -31,9 +33,7 @@
                     "on-scroll"     : 1,
                     "format": {
                               "months":     "<b>{}</b>",
-                              "days":       "{}",
-                              "weekdays":   "<span color='#fe640b'><b>{}</b></span>",
-                              "today":      "<span color='#8839ef'><b><u>{}</u></b></span>"
+                              "days":       "{}"
                               }
                     },
         "actions":  {
