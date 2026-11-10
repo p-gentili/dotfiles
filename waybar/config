@@ -1,6 +1,6 @@
 {
     "layer": "top",
-    "height": 30,
+    "height": 40,
     "spacing": 4,
     "margin-top": 10,
     "margin-left": 10,
@@ -12,7 +12,6 @@
     "modules-right": [
         "custom/theme",
         "cpu",
-        "memory",
         "temperature",
         "backlight",
         "pulseaudio",
@@ -47,9 +46,6 @@
         "format": "CPU {usage}%",
         "tooltip": false,
         "on-click": "kitty --override background=#000000 htop"
-    },
-    "memory": {
-        "format": "RAM {}%"
     },
     "battery": {
 		"on-click": "~/.local/bin/power-menu",
