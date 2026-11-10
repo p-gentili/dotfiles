@@ -12,7 +12,7 @@ if [[ "$CMD" == "toggle" ]]; then
             "Volume: Muted"
     else
         # unmuted → show current volume with bar
-        VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}')
+        VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf "%.0f", $2*100}')
         notify-send -h int:value:"$VOL" \
             -h string:x-canonical-private-synchronous:volume \
             "Volume: ${VOL}%"
@@ -21,10 +21,10 @@ if [[ "$CMD" == "toggle" ]]; then
 fi
 
 # otherwise: volume change
-wpctl set-volume @DEFAULT_AUDIO_SINK@ "$CMD"
+wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ "$CMD"  # cap at 100%
 
 # read new volume
-VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}')
+VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf "%.0f", $2*100}')
 
 notify-send -h int:value:"$VOL" \
     -h string:x-canonical-private-synchronous:volume \
