@@ -113,3 +113,5 @@ nvm() {
 # Plugins - Must source at the end
 source ~/dotfiles/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
+
+. "$HOME/.local/bin/env"
