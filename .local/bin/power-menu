@@ -7,10 +7,12 @@ set -euo pipefail
 if pkill -x wofi; then exit 0; fi
 
 current=$(powerprofilesctl get)
+# The box renders 20px wider than --width, so xoffset -30 leaves the same 10px
+# right gap as windows; yoffset 10 lines its top up with window tops.
 choice=$(powerprofilesctl list | grep -Eo '(performance|balanced|power-saver)' | sort -u \
     | wofi --dmenu --prompt "Power [$current]" \
            --width 220 --height 170 \
-           --location top_right --xoffset -10 --yoffset 40 \
+           --location top_right --xoffset -30 --yoffset 10 \
            --style ~/.config/wofi/style.css)
 
 [ -n "${choice:-}" ] && powerprofilesctl set "$choice"
