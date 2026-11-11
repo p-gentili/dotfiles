@@ -38,8 +38,12 @@ Install before running `link.sh`:
 sudo apt install -y \
     sway waybar mako-notifier wofi \
     swaylock swayidle libpam-pwdfile grim slurp brightnessctl playerctl \
-    wl-clipboard cliphist python3-evdev blueman
+    wl-clipboard cliphist python3-evdev blueman fzf
 ```
+
+`zsh/.zshrc` loads fzf's key bindings with `fzf --zsh`, which needs **fzf 0.48
+or newer**. Ubuntu 26.04's package is new enough; 24.04's (0.44) is not, so on
+older releases install fzf from its GitHub releases instead.
 
 `wl-clip-persist` isn't packaged for Ubuntu or published on crates.io; install
 it from its GitHub repo (needs a Rust toolchain):
