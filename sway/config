@@ -49,10 +49,17 @@ bindswitch --reload lid:off output eDP-1 enable dpms on
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
+#
+# Blanking: each timeout fires once per idle stretch, so two gated rules are
+# needed. `timeout 5` blanks 5s after a manual lock ($mod+Escape counts as
+# activity); `timeout 601` blanks right after the 10-min idle lock, whose idle
+# stretch already passed the 5s mark before swaylock was running.
 exec swayidle -w \
     timeout 5 'pgrep -x swaylock >/dev/null && swaymsg "output * dpms off"' \
         resume 'swaymsg "output * dpms on"' \
     timeout 600 '~/.local/bin/lock' \
+    timeout 601 'pgrep -x swaylock >/dev/null && swaymsg "output * dpms off"' \
+        resume 'swaymsg "output * dpms on"' \
     after-resume 'grep -q open /proc/acpi/button/lid/*/state && swaymsg "output eDP-1 enable dpms on" || swaymsg "output eDP-1 disable"' \
     before-sleep 'swaylock -f -C ~/.config/swaylock/config-mocha'
 
