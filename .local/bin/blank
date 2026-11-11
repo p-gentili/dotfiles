@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Blank / unblank while locked: displays (DPMS) and the keyboard backlight.
+#
+#   blank off  — only if swaylock is running: displays off, keyboard light off
+#   blank on   — displays on, keyboard light back to its level before blanking
+#
+# Called from swayidle in sway/config. swayidle runs `resume` even when the
+# gated `off` did nothing, so the keyboard level is only restored if `off`
+# saved it. Both blank timeouts can fire during one lock, so an existing save
+# is never overwritten (the second `off` would otherwise save 0).
+set -uo pipefail
+
+KBD='*::kbd_backlight'
+SAVE="${XDG_RUNTIME_DIR:-/tmp}/blank-kbd-level"
+
+case "${1:-}" in
+off)
+    pgrep -x swaylock >/dev/null || exit 0
+    swaymsg 'output * dpms off' >/dev/null
+    if [[ ! -e $SAVE ]] && level=$(brightnessctl -d "$KBD" get 2>/dev/null); then
+        echo "$level" >"$SAVE"
+        brightnessctl -q -d "$KBD" set 0
+    fi
+    ;;
+on)
+    swaymsg 'output * dpms on' >/dev/null
+    if [[ -e $SAVE ]]; then
+        brightnessctl -q -d "$KBD" set "$(cat "$SAVE")"
+        rm -f "$SAVE"
+    fi
+    ;;
+*)
+    echo "usage: blank off|on" >&2
+    exit 2
+    ;;
+esac

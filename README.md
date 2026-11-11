@@ -16,6 +16,7 @@ Personal config for a Sway (Wayland) desktop and terminal tooling.
   - `vol-notify`, `bright-notify` — change volume / backlight and show an OSD
   - `screenshot` — full screen, region or window capture
   - `lock` — start swaylock (no stacking if already locked)
+  - `blank` — while locked, turn displays and keyboard backlight off / back on (swayidle)
   - `power-actions` — waybar power button menu (shutdown, reboot, suspend)
   - `power-menu` — waybar battery click menu (power profile)
   - `theme-apply`, `theme-toggle`, `theme-status` — switch and report light/dark (Latte/Mocha)
