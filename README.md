@@ -9,11 +9,11 @@ Personal config for a Sway (Wayland) desktop and terminal tooling.
 - **mako/** — notifications
 - **wofi/** — application launcher (`$mod+d`)
 - **swaylock/** — lock screen (`$mod+Escape` / idle / before-sleep — see "Screen locking" below)
-- **kitty/**, **foot/** — terminals (follow the system light/dark preference)
+- **kitty/**, **foot/** — terminals (kitty follows the system light/dark preference; foot uses a fixed Gruvbox dark theme)
 - **nvim/**, **vim/**, **helix/**, **zed/** — editors
 - **zsh/**, **.tmux.conf**, **zellij/**, **opencode/** — shell & tooling
 - **btop/** — system monitor
-- **herdr/** — herdr config
+- **herdr/** — herdr (terminal workspace manager for AI coding agents)
 - **topgrade/** — `topgrade` config (prebuilt binaries via cargo-binstall; source builds use `--locked`)
 - **.local/bin/** — helper scripts:
   - `vol-notify`, `bright-notify` — change volume / backlight and show an OSD
@@ -38,8 +38,17 @@ Install before running `link.sh`:
 sudo apt install -y \
     sway waybar mako-notifier wofi \
     swaylock swayidle libpam-pwdfile grim slurp brightnessctl playerctl \
-    wl-clipboard cliphist python3-evdev blueman fzf
+    wl-clipboard cliphist python3-evdev blueman
 ```
+
+Shell and terminal tools:
+
+```bash
+sudo apt install -y zsh kitty foot neovim tmux eza fzf hx   # hx = helix
+```
+
+`zellij`, `zed`, `btop`, `herdr` and `topgrade` are optional; install them
+however you prefer, the configs just get linked.
 
 `zsh/.zshrc` loads fzf's key bindings with `fzf --zsh`, which needs **fzf 0.48
 or newer**. Ubuntu 26.04's package is new enough; 24.04's (0.44) is not, so on
@@ -74,11 +83,21 @@ fc-cache -f
 ## Install
 
 ```bash
-./link.sh
+git clone https://github.com/p-gentili/dotfiles.git ~/dotfiles
+~/dotfiles/link.sh
 ```
 
-This symlinks each config directory into `~/.config` and the scripts into
-`~/.local/bin`. Re-run it any time after adding a new config.
+Clone it to `~/dotfiles` exactly: `zsh/.zshrc` loads its plugins from that path.
+`link.sh` itself can be run from any directory. It:
+
+- fetches the zsh plugin submodules (`zsh-autosuggestions`, `zsh-syntax-highlighting`);
+- symlinks each config into `~/.config` (whole directories for sway, waybar,
+  kitty, …; single files for zed, btop and herdr, whose directories also hold
+  logs and session state) and the helper scripts into `~/.local/bin`;
+- downloads vim-plug for vim and nvim;
+- points the theme symlinks at the Latte variants (see "Theme switching").
+
+It's safe to re-run, for example after adding a new config to the repo.
 
 ## Keybindings (sway)
 
@@ -95,8 +114,10 @@ This symlinks each config directory into `~/.config` and the scripts into
 | `$mod+Shift+n` | Dismiss all open notifications |
 | `$mod+Shift+q` | Kill focused window |
 | `$mod+Escape` | Lock the screen |
-| `$mod+h/j/k/l` | Move focus |
-| `$mod+Shift+h/j/k/l` | Move window |
+| `$mod+Shift+c` | Reload sway config |
+| `$mod+Shift+e` | Exit sway (asks first) |
+| `$mod+h/j/k/l` or arrows | Move focus |
+| `$mod+Shift+h/j/k/l` or arrows | Move window |
 | `$mod+1..0` | Switch workspace |
 | `$mod+Shift+1..0` | Move window to workspace |
 | Three-finger swipe left/right | Switch workspace (touchpad, `bindgesture`) |
@@ -106,10 +127,14 @@ This symlinks each config directory into `~/.config` and the scripts into
 | `Print` | Screenshot (full → file + clipboard) |
 | `Shift+Print` | Screenshot (region) |
 | `$mod+Print` | Screenshot (focused window) |
+| `$mod+Ctrl+h` | Toggle HDR (`hdr-toggle`) |
 | Brightness keys | Adjust backlight (with OSD) |
 | Volume / mute / media keys | PipeWire volume + playerctl |
 | waybar ☀/☾ button | Toggle light (Latte) / dark (Mocha) — or run `theme-toggle` |
 | waybar ⏻ button | Power menu: shutdown / reboot / suspend (`power-actions`) |
+
+Layout keys (`$mod+b/v/s/w/e`, `$mod+Shift+space`, `$mod+space`, `$mod+a`)
+are sway's defaults.
 
 ## Workspace switching by scroll (mouse vs touchpad)
 
@@ -160,7 +185,7 @@ with `cliphist wipe`.
 
 swaylock locks the screen: **`$mod+Escape`** locks manually, swayidle locks
 after 10 min idle (then blanks the displays), and any suspend locks on resume
-(`before-sleep`); `loginctl lock-session` locks too. Suspend now lives on the
+(`before-sleep`); `loginctl lock-session` locks too. To suspend, use the
 waybar **⏻ button → Suspend**.
 
 Why it needs a dedicated PAM stack: this box logs in as an
