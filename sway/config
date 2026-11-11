@@ -62,6 +62,11 @@ exec swayidle -w \
     after-resume 'grep -q open /proc/acpi/button/lid/*/state && swaymsg "output eDP-1 enable dpms on" || swaymsg "output eDP-1 disable"' \
     before-sleep 'swaylock -f -C ~/.config/swaylock/config-mocha'
 
+# Don't idle-lock while any window is fullscreen (video, presentations), even
+# if the app doesn't send its own idle inhibitor. Native and XWayland windows.
+for_window [app_id=".*"] inhibit_idle fullscreen
+for_window [class=".*"] inhibit_idle fullscreen
+
 ### Input configuration
 #
 # Example configuration:
