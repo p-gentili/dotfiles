@@ -89,6 +89,7 @@ cleanup = true
 # "Emacs Snapshot" = "rm -rf ~/.emacs.d/elpa.bak && cp -rl ~/.emacs.d/elpa ~/.emacs.d/elpa.bak"
 "Cargo enforce lock" = "cargo install --list | grep -E '^[^ ]' | cut -d' ' -f1 | xargs -n1 cargo install-update-config --enforce-lock >/dev/null"
 "Flutter reset pubspec.lock" = "git -C ~/Workspace/flutter restore pubspec.lock"
+"Cargo binstall" = "cargo binstall -y --disable-strategies compile cargo-binstall bat just topgrade cargo-tarpaulin action-validator"
 
 
 # Commands to run after anything
