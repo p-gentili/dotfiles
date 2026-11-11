@@ -27,8 +27,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 compdef _git gco=git-checkout
 
 # Fzf bindings
-source ~/dotfiles/zsh/fzf/key-bindings.zsh
-source ~/dotfiles/zsh/fzf/completion.zsh
+command -v fzf >/dev/null && source <(fzf --zsh)
 
 # Load version control information
 autoload -Uz vcs_info
@@ -81,7 +80,6 @@ setopt HIST_REDUCE_BLANKS      # remove superfluous blanks
 # Path
 export PATH=$HOME/.local/bin:$PATH
 [ -f ~/.cargo/env ] && source ~/.cargo/env
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if [ -d ~/.pyenv ]; then
     export PYENV_ROOT="$HOME/.pyenv"

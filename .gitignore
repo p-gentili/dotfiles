@@ -1,5 +1,3 @@
-.vim/plugged
-.vim/.netrwhist
 .local/bin/__pycache__/
 sway/theme.conf
 wofi/style.css
