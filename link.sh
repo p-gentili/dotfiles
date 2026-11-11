@@ -29,6 +29,9 @@ ln -sf $(pwd)/zsh/.zsh_alias $HOME/.zsh_alias
 mkdir -p ~/.config/opencode
 ln -sf $(pwd)/opencode/opencode.jsonc $HOME/.config/opencode/opencode.jsonc
 
+# Topgrade
+ln -sf $(pwd)/topgrade/topgrade.toml $HOME/.config/topgrade.toml
+
 # Other apps
 ln -sf $(pwd)/.tmux.conf $HOME/.tmux.conf
 ln -snf $(pwd)/foot $HOME/.config/foot

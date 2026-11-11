@@ -12,6 +12,7 @@ Personal config for a Sway (Wayland) desktop and terminal tooling.
 - **kitty/**, **foot/** — terminals (follow the system light/dark preference)
 - **nvim/**, **vim/**, **helix/** — editors
 - **zsh/**, **.tmux.conf**, **zellij/**, **opencode/** — shell & tooling
+- **topgrade/** — `topgrade` config (cargo upgrades use `--locked`)
 - **.local/bin/** — helper scripts:
   - `vol-notify`, `bright-notify` — change volume / backlight and show an OSD
   - `screenshot` — full screen, region or window capture
