@@ -55,12 +55,17 @@ bindswitch --reload lid:off output eDP-1 enable dpms on
 # activity); `timeout 601` blanks right after the 10-min idle lock, whose idle
 # stretch already passed the 5s mark before swaylock was running. `blank`
 # also turns the keyboard backlight off and restores it on wake.
+#
+# All locking goes through ~/.local/bin/lock (no stacked lockers). Its swaylock
+# config sets `daemonize`, so with -w before-sleep only returns once the screen
+# is locked. `lock` handles logind lock requests (`loginctl lock-session`).
 exec swayidle -w \
     timeout 5 '~/.local/bin/blank off' resume '~/.local/bin/blank on' \
     timeout 600 '~/.local/bin/lock' \
     timeout 601 '~/.local/bin/blank off' resume '~/.local/bin/blank on' \
     after-resume 'grep -q open /proc/acpi/button/lid/*/state && swaymsg "output eDP-1 enable dpms on" || swaymsg "output eDP-1 disable"' \
-    before-sleep 'swaylock -f -C ~/.config/swaylock/config-mocha'
+    before-sleep '~/.local/bin/lock' \
+    lock '~/.local/bin/lock'
 
 # Don't idle-lock while any window is fullscreen (video, presentations), even
 # if the app doesn't send its own idle inhibitor. Native and XWayland windows.

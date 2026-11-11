@@ -151,7 +151,8 @@ with `cliphist wipe`.
 
 swaylock locks the screen: **`$mod+Escape`** locks manually, swayidle locks
 after 10 min idle (then blanks the displays), and any suspend locks on resume
-(`before-sleep`). Suspend now lives on the waybar **⏻ button → Suspend**.
+(`before-sleep`); `loginctl lock-session` locks too. Suspend now lives on the
+waybar **⏻ button → Suspend**.
 
 Why it needs a dedicated PAM stack: this box logs in as an
 [authd](https://github.com/canonical/authd)-managed user (Google/Canonical SSO).
