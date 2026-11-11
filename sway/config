@@ -110,6 +110,8 @@ input "1267:12693:ELAN0676:00_04F3:3195_Touchpad" {
     bindsym $mod+Shift+Return exec ~/.local/bin/scratchterm
     bindsym $mod+d exec $menu
     bindsym $mod+t exec $filemanager
+    # Bring back the most recently closed notification (repeat to go further back)
+    bindsym $mod+n exec makoctl restore
 
     # Kill focused window
     bindsym $mod+Shift+q kill
