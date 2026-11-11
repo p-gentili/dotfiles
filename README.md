@@ -10,8 +10,10 @@ Personal config for a Sway (Wayland) desktop and terminal tooling.
 - **wofi/** — application launcher (`$mod+d`)
 - **swaylock/** — lock screen (`$mod+Escape` / idle / before-sleep — see "Screen locking" below)
 - **kitty/**, **foot/** — terminals (follow the system light/dark preference)
-- **nvim/**, **vim/**, **helix/** — editors
+- **nvim/**, **vim/**, **helix/**, **zed/** — editors
 - **zsh/**, **.tmux.conf**, **zellij/**, **opencode/** — shell & tooling
+- **btop/** — system monitor
+- **herdr/** — herdr config
 - **topgrade/** — `topgrade` config (prebuilt binaries via cargo-binstall; source builds use `--locked`)
 - **.local/bin/** — helper scripts:
   - `vol-notify`, `bright-notify` — change volume / backlight and show an OSD

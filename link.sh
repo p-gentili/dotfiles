@@ -1,6 +1,10 @@
 #!/bin/bash
 set -x
 
+# Run from the repo root, wherever the script is called from
+cd "$(dirname "$0")"
+git submodule update --init
+
 # Neovim
 mkdir -p ~/.config/nvim
 mkdir -p ~/.config/nvim/lua
@@ -31,6 +35,12 @@ ln -sf $(pwd)/opencode/opencode.jsonc $HOME/.config/opencode/opencode.jsonc
 
 # Topgrade
 ln -sf $(pwd)/topgrade/topgrade.toml $HOME/.config/topgrade.toml
+
+# Zed, btop, herdr (file links: these dirs also hold runtime state)
+mkdir -p ~/.config/zed ~/.config/btop ~/.config/herdr
+ln -sf $(pwd)/zed/settings.json $HOME/.config/zed/settings.json
+ln -sf $(pwd)/btop/btop.conf $HOME/.config/btop/btop.conf
+ln -sf $(pwd)/herdr/config.toml $HOME/.config/herdr/config.toml
 
 # Other apps
 ln -sf $(pwd)/.tmux.conf $HOME/.tmux.conf
