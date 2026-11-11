@@ -115,9 +115,8 @@ function gbm() {
 
 
 # ls
-# alias ll="exa -l || ls -l -h --color=auto"
 function ll() {
-    exa -l $@ || ls -l -h --color=auto $@
+    eza -l "$@" || ls -l -h --color=auto "$@"
 }
 alias lla="ll -a"
 function cl() {
