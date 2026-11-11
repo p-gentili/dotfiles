@@ -85,6 +85,7 @@ This symlinks each config directory into `~/.config` and the scripts into
 | `$mod+t` | File manager |
 | `$mod+c` | Clipboard history picker (cliphist + wofi) |
 | `$mod+n` | Re-show the last closed notification (repeat for older ones) |
+| `$mod+Shift+n` | Dismiss all open notifications |
 | `$mod+Shift+q` | Kill focused window |
 | `$mod+Escape` | Lock the screen |
 | `$mod+h/j/k/l` | Move focus |

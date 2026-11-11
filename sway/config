@@ -112,6 +112,8 @@ input "1267:12693:ELAN0676:00_04F3:3195_Touchpad" {
     bindsym $mod+t exec $filemanager
     # Bring back the most recently closed notification (repeat to go further back)
     bindsym $mod+n exec makoctl restore
+    # Dismiss all open notifications (urgent ones never time out)
+    bindsym $mod+Shift+n exec makoctl dismiss --all
 
     # Kill focused window
     bindsym $mod+Shift+q kill
